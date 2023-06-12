@@ -1,0 +1,24 @@
+Patente: jahaja
+Permiso de Circulación al día: true
+Revisión técnica al día: true
+Estado actual del camión (true=funcionando, false=no funcionando): true
+Carga máxima del camión: 18
+
+Patente: pepito
+Permiso de Circulación al día: true
+Revisión técnica al día: false
+Estado actual del camión (true=funcionando, false=no funcionando): false
+Carga máxima del camión: 20
+
+Patente: olamundo
+Permiso de Circulación al día: true
+Revisión técnica al día: true
+Estado actual del camión (true=funcionando, false=no funcionando): false
+Carga máxima del camión: 15
+
+Patente: silva
+Permiso de Circulación al día: true
+Revisión técnica al día: true
+Estado actual del camión (true=funcionando, false=no funcionando): false
+Carga máxima del camión: 15
+

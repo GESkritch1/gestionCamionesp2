@@ -1,0 +1,18 @@
+Nombre: Mauricio
+Rut: 20983443k
+Edad: 21
+Licencia al día: true
+Estado conductor (true=trabajando, false=no trabajando): true
+
+Nombre: Benjamin
+Rut: 205465465
+Edad: 21
+Licencia al día: true
+Estado conductor (true=trabajando, false=no trabajando): true
+
+Nombre: Martin
+Rut: 217897897
+Edad: 20
+Licencia al día: false
+Estado conductor (true=trabajando, false=no trabajando): false
+
