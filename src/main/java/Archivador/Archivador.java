@@ -7,6 +7,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Archivador {
 	private List<Camion> camiones;
@@ -37,78 +39,12 @@ public class Archivador {
 			System.out.println("El archivo no pudo ser encontrado: " + e.getMessage());
 		}
 	}
-	public void abrirArchivo(String archivo) {
-		try {
-			FileReader fileReader = new FileReader(archivo);
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-			String linea;
-			while ((linea = bufferedReader.readLine()) != null) {
-				System.out.println(linea);
-			}
-
-			bufferedReader.close();
-		} catch (IOException e) {
-			System.out.println("Error al abrir el archivo: " + e.getMessage());
-		}
-	}
-	public void guardarObjetoEnArchivo(Object objeto, String nombreArchivo) {
-		try (FileOutputStream fileOutputStream = new FileOutputStream(nombreArchivo);
-			 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
-
-			objectOutputStream.writeObject(objeto);
-			System.out.println("Objeto guardado en el archivo: " + nombreArchivo);
-		} catch (IOException e) {
-			System.out.println("Error al guardar el objeto en el archivo: " + e.getMessage());
-		}
-	}
-	public Object leerObjetoDesdeArchivo(String nombreArchivo) {
-		try (FileInputStream fileInputStream = new FileInputStream(nombreArchivo);
-			 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
-
-			Object objeto = objectInputStream.readObject();
-			System.out.println("Objeto leído desde el archivo: " + nombreArchivo);
-			return objeto;
-		} catch (IOException | ClassNotFoundException e) {
-			System.out.println("Error al leer el objeto desde el archivo: " + e.getMessage());
-		}
-		return null;
-	}
-	public void guardarTextoEnArchivo(String texto, String nombreArchivo) {
-		try (PrintWriter writer = new PrintWriter(nombreArchivo)) {
-			writer.println(texto);
-			System.out.println("Texto guardado en el archivo: " + nombreArchivo);
-		} catch (FileNotFoundException e) {
-			System.out.println("Error al guardar el texto en el archivo: " + e.getMessage());
-		}
-	}
-	public void guardarTextoEnArchivosoloChoferes(String nombreArchivo){
-		try (PrintWriter writer = new PrintWriter(nombreArchivo)) {
-			for (Chofer chofer : Chofer.listaChoferes) {
-				writer.println("Nombre: " + chofer.getNombre());
-				writer.println("Rut: " + chofer.getRut());
-				writer.println("Edad: " + chofer.getEdad());
-				writer.println("Licencia al día: " + chofer.getLicencia());
-				writer.println("Estado conductor (true=trabajando, false=no trabajando): " + chofer.getEstadoChofer());
-				writer.println();
-			}
-			System.out.println("Datos de choferes guardados en el archivo: " + nombreArchivo);
-		} catch (FileNotFoundException e) {
-			System.out.println("Error al guardar los datos de choferes en el archivo: " + e.getMessage());
-		}
-
-	}
 	public void agregarChoferATexto(String nombreArchivo, Chofer chofer) {
 		try (FileWriter fileWriter = new FileWriter(nombreArchivo, true);
 			 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 			 PrintWriter writer = new PrintWriter(bufferedWriter)) {
 
-			writer.println("Nombre: " + chofer.getNombre());
-			writer.println("Rut: " + chofer.getRut());
-			writer.println("Edad: " + chofer.getEdad());
-			writer.println("Licencia al día: " + chofer.getLicencia());
-			writer.println("Estado conductor (true=trabajando, false=no trabajando): " + chofer.getEstadoChofer());
-			writer.println();
+			writer.println("Nombre: " + chofer.getNombre()+"; Rut: " + chofer.getRut()+"; Licencia al día: " + chofer.getLicencia()+"; Estado conductor (true=trabajando, false=no trabajando): " + chofer.getEstadoChofer());
 
 			System.out.println("Chofer agregado al archivo: " + nombreArchivo);
 		} catch (IOException e) {
@@ -120,68 +56,112 @@ public class Archivador {
 			 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 			 PrintWriter writer = new PrintWriter(bufferedWriter)) {
 
-			writer.println("Patente: " + camion.getPatente());
-			writer.println("Permiso de Circulación al día: " + camion.getPermisoCirculacion());
-			writer.println("Revisión técnica al día: " + camion.getRevisionTecnica());
-			writer.println("Estado actual del camión (true=funcionando, false=no funcionando): " + camion.getEstadoActual());
-			writer.println("Carga máxima del camión: " + camion.getCargaMax());
-			writer.println();
+			writer.println("Patente: " + camion.getPatente()+"; Permiso de Circulación al día: " + camion.getPermisoCirculacion()+"; Revisión técnica al día: " + camion.getRevisionTecnica()+ "; Estado actual del camión (true=funcionando, false=no funcionando): " + camion.getEstadoActual()+"; Carga máxima del camión: " + camion.getCargaMax());
 
 			System.out.println("Camión agregado al archivo: " + nombreArchivo);
 		} catch (IOException e) {
 			System.out.println("Error al agregar el camión al archivo: " + e.getMessage());
 		}
 	}
-	public void eliminarCamionArchivo(Camion camion) {
-		try (FileOutputStream fileOutputStream = new FileOutputStream("camiones.txt");
-			 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
-
-			camiones.remove(camion);
-
-			for (Camion c : camiones) {
-				objectOutputStream.writeObject(c);
-			}
-
-			System.out.println("Camión eliminado del archivo: " + camion.getPatente());
-		} catch (IOException e) {
-			System.out.println("Error al eliminar el camión del archivo: " + e.getMessage());
-		}
-	}
 	public void eliminarCamionArchivotxt(String patente, String archivo) {
-		// Leer el contenido del archivo listaCamiones.txt
-		List<Camion> camiones = new ArrayList<>();
+		// Leer el contenido del archivo
+		List<String> lineas = new ArrayList<>();
 
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
-			camiones = (List<Camion>) ois.readObject();
-		} catch (IOException | ClassNotFoundException e) {
-			System.out.println("Error al leer el archivo listaCamiones.txt: " + e.getMessage());
+		try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+			String linea;
+
+			while ((linea = br.readLine()) != null) {
+				lineas.add(linea);
+			}
+		} catch (IOException e) {
+			System.out.println("Error al leer el archivo: " + e.getMessage());
 			return;
 		}
 
-		// Buscar el camión en la lista y eliminarlo
+		// Buscar el camión en las líneas y eliminarlo
 		boolean camionEncontrado = false;
-		for (Camion camion : camiones) {
-			if (camion.getPatente().equals(patente)) {
-				camiones.remove(camion);
+		List<Integer> indicesEliminar = new ArrayList<>(); // Índices de las líneas a eliminar
+		for (int i = 0; i < lineas.size(); i++) {
+			String linea = lineas.get(i);
+			if (linea.startsWith("Patente: ") && linea.contains(patente)) {
 				camionEncontrado = true;
-				break;
+				indicesEliminar.add(i); // Almacenar el índice de la línea a eliminar
 			}
 		}
 
 		if (!camionEncontrado) {
-			System.out.println("El camión con patente " + patente + " no se encuentra en el archivo listaCamiones.txt");
+			System.out.println("El camión con patente " + patente + " no se encuentra en el archivo.");
 			return;
 		}
 
-		// Guardar la lista actualizada de camiones en el archivo listaCamiones.txt
-		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(archivo))) {
-			oos.writeObject(camiones);
-			System.out.println("Camión eliminado del archivo listaCamiones.txt");
-		} catch (IOException e) {
-			System.out.println("Error al escribir en el archivo listaCamiones.txt: " + e.getMessage());
+		// Eliminar las líneas correspondientes al camión
+		for (int i : indicesEliminar) {
+			lineas.remove(i);
+		}
+
+		// Guardar las líneas actualizadas en el archivo
+		try (PrintWriter writer = new PrintWriter(archivo)) {
+			for (String linea : lineas) {
+				writer.println(linea);
+			}
+			System.out.println("Camión eliminado del archivo: " + patente);
+		} catch (FileNotFoundException e) {
+			System.out.println("Error al guardar los cambios en el archivo: " + e.getMessage());
 		}
 	}
-	public static List<Chofer> leerListaChoferes() {
+
+	public void eliminarChoferArchivoTxt(String rut, String archivo) {
+		// Leer el contenido del archivo
+		List<String> lineas = new ArrayList<>();
+
+		try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+			String linea;
+
+			while ((linea = br.readLine()) != null) {
+				lineas.add(linea);
+			}
+		} catch (IOException e) {
+			System.out.println("Error al leer el archivo: " + e.getMessage());
+			return;
+		}
+
+		// Buscar el chofer en las líneas y eliminarlo
+		boolean choferEncontrado = false;
+		List<Integer> indicesEliminar = new ArrayList<>(); // Índices de las líneas a eliminar
+
+		for (int i = 0; i < lineas.size(); i++) {
+			String linea = lineas.get(i);
+
+			// Buscar el RUT del chofer sin puntos ni guión
+			if (linea.contains(rut)) {
+				choferEncontrado = true;
+				indicesEliminar.add(i); // Almacenar el índice de la línea a eliminar
+			}
+		}
+
+		if (!choferEncontrado) {
+			System.out.println("El chofer con RUT " + rut + " no se encuentra en el archivo.");
+			return;
+		}
+
+		// Eliminar las líneas correspondientes al chofer
+		for (int i : indicesEliminar) {
+			lineas.remove(i);
+		}
+
+		// Guardar las líneas actualizadas en el archivo
+		try (PrintWriter writer = new PrintWriter(archivo)) {
+			for (String linea : lineas) {
+				writer.println(linea);
+			}
+			System.out.println("Chofer eliminado del archivo: " + rut);
+		} catch (FileNotFoundException e) {
+			System.out.println("Error al guardar los cambios en el archivo: " + e.getMessage());
+		}
+	}
+
+
+	public List<Chofer> leerListaChoferes() {
 		List<Chofer> choferes = new ArrayList<>();
 
 		try (BufferedReader br = new BufferedReader(new FileReader("listaChoferes.txt"))) {
@@ -208,7 +188,7 @@ public class Archivador {
 
 		return choferes;
 	}
-	public static List<Camion> leerListaCamiones(List<Chofer> choferes) {
+	public List<Camion> asignarChoferaCamion(List<Chofer> choferes) {
 		List<Camion> camiones = new ArrayList<>();
 
 		try (BufferedReader br = new BufferedReader(new FileReader("listaCamiones.txt"))) {
@@ -240,6 +220,16 @@ public class Archivador {
 		}
 
 		return camiones;
+	}
+	public void guardarListaCamionConChofer(List<Camion> camiones) {
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter("listaCamionConChofer.txt"))) {
+			for (Camion camion : camiones) {
+				bw.write(camion.obtenerDatosCamion()); // Escribe la representación del camión con chofer en el archivo
+				bw.newLine();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 

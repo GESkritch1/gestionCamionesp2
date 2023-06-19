@@ -4,6 +4,7 @@ import Archivador.Archivador;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,19 +18,18 @@ Scanner sc = new Scanner(System.in);
 	}
 	public void opcionesCamiones() {
 		System.out.println("(1) agregar un camion a la lista de camiones");
-		System.out.println("(2) eliminar Camion (funcion en mantenimiento)");
-		System.out.println("(3) agregar Chofer a algun camion   (funcion en mantenimiento)");
+		System.out.println("(2) eliminar Camion ");
+		System.out.println("(3) agregar Chofer a algun camion (en mantenimiento)");
 		System.out.println("(4) mostrar Camiones de la lista");
 		int i = Utilitarios.leerEntero();
 
 		switch (i){
 			case 1: agregarCamion();
 			break;
-			case 2:
-				System.out.println("funcion en mantenimiento");//coming soon
+			case 2: eliminarCamion();//coming soon
 				break;
 			case 3:
-				System.out.println("funcion en mantenimiento");;//coming soon
+				System.out.println("esta en mantenimiento");
 				break;
 			case 4: mostrarCamiones();
 			break;
@@ -48,15 +48,25 @@ Scanner sc = new Scanner(System.in);
 	public void opcionesChoferes() {
 		System.out.println("(1) agregar Chofer a la lista");
 		System.out.println("(2) mostrar Choferes de la lista");
+		System.out.println("(3) eliminar Chofer de la lista");
 		int i = Utilitarios.leerEntero();
 		switch (i){
 			case 1: agregarChofer();
 			break;
 			case 2: mostrarChoferes();
+			break;
+			case 3: eliminarChofer();
+			break;
 			default:
 				System.out.println("no hay mas funciones por ahora");
 		}
 
+	}
+
+	private void eliminarChofer() {
+		System.out.println("ingrese el rut del chofer que desea eliminar: ");
+		String choferaEliminar = sc.nextLine();
+		archivador.eliminarChoferArchivoTxt(choferaEliminar, "listaChoferes.txt");
 	}
 
 	public void mostrarChoferes() {
@@ -74,15 +84,10 @@ Scanner sc = new Scanner(System.in);
 		String rut = scanner.nextLine();
 
 		System.out.print("Edad: ");
-		int edad = scanner.nextInt();
+		int edad = Utilitarios.leerEntero();
 
-		System.out.print("Licencia(true=tiene al dia, false=no la tiene al dia): ");
-		boolean licencia = scanner.nextBoolean();
-		scanner.nextLine(); // Consumir el salto de línea pendiente después de nextBoolean()
-
-		System.out.print("Estado Chofer(true=trabajando, False=no puede trabajar): ");
-		boolean estado = scanner.nextBoolean();
-		scanner.nextLine(); // Consumir el salto de línea pendiente después de nextInt()
+		boolean licencia = Utilitarios.solicitarBooleano("Licencia (true=tiene al día, false=no la tiene al día): ");
+		boolean estado = Utilitarios.solicitarBooleano("Estado del Chofer (true=trabajando, false=no puede trabajar): ");
 
 		Chofer nuevoChofer = new Chofer(nombre, rut, edad, licencia, estado);
 
@@ -96,34 +101,27 @@ Scanner sc = new Scanner(System.in);
 	}
 
 	private void eliminarCamion() {
-		//coming soon
+		System.out.println("ingrese la patente del camion que desea eliminar: ");
+		String camionaEliminar = sc.nextLine();
+		archivador.eliminarCamionArchivotxt(camionaEliminar, "listaCamiones.txt" );
 	}
 
 	public void agregarCamion() {
-		Scanner scanner = new Scanner(System.in);
-
 		System.out.println("Ingrese los datos del camión:");
 
 		System.out.print("Patente: ");
-		String patente = scanner.nextLine();
+		String patente = sc.nextLine();
 
-		System.out.print("Permiso de Circulación al día (true/false): ");
-		boolean permisoCirculacion = scanner.nextBoolean();
-		scanner.nextLine(); // Consumir el salto de línea pendiente después de nextBoolean()
-
-		System.out.print("Revisión técnica al día (true/false): ");
-		boolean revisionTecnica = scanner.nextBoolean();
-		scanner.nextLine(); // Consumir el salto de línea pendiente después de nextBoolean()
-
-		System.out.print("Estado actual del camión (true=funcionando, false=no funcionando): ");
-		boolean estadoActual = scanner.nextBoolean();
-		scanner.nextLine(); // Consumir el salto de línea pendiente después de nextBoolean()
+		boolean permisoCirculacion = Utilitarios.solicitarBooleano("Permiso de Circulación al día (true/false): ");
+		boolean revisionTecnica = Utilitarios.solicitarBooleano("Revisión técnica al día (true/false): ");
+		boolean estadoActual = Utilitarios.solicitarBooleano("Estado actual del camión (true=funcionando, false=no funcionando): ");
 
 		System.out.print("Carga máxima del camión: ");
-		int cargaMax = scanner.nextInt();
-		scanner.nextLine(); // Consumir el salto de línea pendiente después de nextInt()
+		int cargaMax = Utilitarios.leerEntero();
+		sc.nextLine(); // Consumir el salto de línea pendiente después de nextInt()
 
 		Camion nuevoCamion = new Camion(patente, permisoCirculacion, revisionTecnica, estadoActual, cargaMax);
+
 
 		// Agregar el nuevo camión a la lista
 		nuevoCamion.agregarCamionLista();
@@ -132,61 +130,13 @@ Scanner sc = new Scanner(System.in);
 		archivador.agregarCamionATexto("listaCamiones.txt", nuevoCamion);
 
 		System.out.println("Camión agregado exitosamente.");
-
 	}
 
 
 	private void agregarChoferaCamion(){
 
-		List<Chofer> choferes = leerListaChoferes();
-		List<Camion> camiones = leerListaCamiones(choferes);
-
-		// Llamar a los métodos para guardar la lista de camiones con chofer en un archivo
-		guardarListaCamionConChofer(camiones);
-	}
-
-	public static List<Camion> leerListaCamiones(List<Chofer> choferes) {
-		List<Camion> camiones = new ArrayList<>();
-
-		try (BufferedReader br = new BufferedReader(new FileReader("listaCamiones.txt"))) {
-			String linea;
-
-			while ((linea = br.readLine()) != null) {
-				// Separar la línea en los datos correspondientes
-				String[] datosCamion = linea.split(",");
-				String patente = datosCamion[0];
-				boolean permisoCirculacion = Boolean.parseBoolean(datosCamion[1]);
-				boolean revisionTecnica = Boolean.parseBoolean(datosCamion[2]);
-				boolean estadoActual = Boolean.parseBoolean(datosCamion[3]);
-				int cargaMax = Integer.parseInt(datosCamion[4]);
-
-				// Crear una instancia de Camion con los datos leídos
-				Camion camion = new Camion(patente, permisoCirculacion, revisionTecnica, estadoActual, cargaMax);
-
-				// Asignar un chofer al camión si hay choferes disponibles
-				if (!choferes.isEmpty()) {
-					Chofer chofer = choferes.remove(0); // Obtener el primer chofer de la lista
-					camion.agregarChoferACamion(chofer);
-				}
-
-				// Agregar el camión a la lista
-				camiones.add(camion);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return camiones;
-	}
-	public static void guardarListaCamionConChofer(List<Camion> camiones) {
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter("listaCamionConChofer.txt"))) {
-			for (Camion camion : camiones) {
-				bw.write(camion.obtenerDatosCamion()); // Escribe la representación del camión con chofer en el archivo
-				bw.newLine();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		List<Chofer> choferes = archivador.leerListaChoferes();
+		archivador.asignarChoferaCamion(choferes);
 	}
 
 
