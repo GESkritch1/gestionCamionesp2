@@ -1,3 +1,4 @@
 Patente: PEPITO; Permiso de Circulación al día: true; Revisión técnica al día: true; Estado actual del camión (true=funcionando, false=no funcionando): true; Carga máxima del camión: 10
 Patente: SILVAA; Permiso de Circulación al día: false; Revisión técnica al día: false; Estado actual del camión (true=funcionando, false=no funcionando): false; Carga máxima del camión: 40
-
+Patente: QUEURI; Permiso de Circulación al día: true; Revisión técnica al día: true; Estado actual del camión (true=funcionando, false=no funcionando): true; Carga máxima del camión: 25
+Patente: MARART; Permiso de Circulación al día: true; Revisión técnica al día: true; Estado actual del camión (true=funcionando, false=no funcionando): true; Carga máxima del camión: 25

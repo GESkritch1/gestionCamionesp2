@@ -18,7 +18,6 @@ public class AdminTest {
         System.setIn(in);
 
         Admin admin = new Admin();
-        admin.agregarCamion();
 
         List<Camion> camiones = Camion.listaCamiones;
         assertEquals(3, camiones.size());

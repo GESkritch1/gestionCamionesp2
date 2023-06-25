@@ -121,6 +121,7 @@ public class Camion implements Serializable {
 			System.out.println("No hay asignado un chofer para este camion.");
 		}
 	}
+
 	public String obtenerDatosCamion() {
 		return  "Datos Chofer: "+
 				"\nNombre: " + this.conductor.getNombre() +

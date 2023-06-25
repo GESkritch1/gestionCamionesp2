@@ -2,20 +2,19 @@ package ContextoProblema;
 
 import Archivador.Archivador;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
+import javax.swing.*;
 import java.util.List;
 import java.util.Scanner;
 
-import static Archivador.Archivador.*;
 
 public class Admin {
-	Archivador archivador = new Archivador();
-Scanner sc = new Scanner(System.in);
+	static Archivador archivador = new Archivador();
+	static Scanner sc = new Scanner(System.in);
+
 	public void opcionesPedido() {
 
 	}
+
 	public void opcionesCamiones() {
 		System.out.println("(1) agregar un camion a la lista de camiones");
 		System.out.println("(2) eliminar Camion ");
@@ -23,16 +22,16 @@ Scanner sc = new Scanner(System.in);
 		System.out.println("(4) mostrar Camiones de la lista");
 		int i = Utilitarios.leerEntero();
 
-		switch (i){
-			case 1: agregarCamion();
-			break;
-			case 2: eliminarCamion();//coming soon
+		switch (i) {
+			case 1:
+				break;
+			case 2:
 				break;
 			case 3:
 				System.out.println("esta en mantenimiento");
 				break;
-			case 4: mostrarCamiones();
-			break;
+			case 4:
+				break;
 			default:
 				System.out.println("no existe esa opcion");
 				break;
@@ -41,8 +40,8 @@ Scanner sc = new Scanner(System.in);
 		}
 	}
 
-	public void mostrarCamiones() {
-		archivador.mostrarArchivo("listaCamiones.txt");
+	public static void mostrarCamiones(JPanel mainPanel) {
+		archivador.mostrarArchivo("listaCamiones.txt", mainPanel);
 	}
 
 	public void opcionesChoferes() {
@@ -50,13 +49,15 @@ Scanner sc = new Scanner(System.in);
 		System.out.println("(2) mostrar Choferes de la lista");
 		System.out.println("(3) eliminar Chofer de la lista");
 		int i = Utilitarios.leerEntero();
-		switch (i){
-			case 1: agregarChofer();
-			break;
-			case 2: mostrarChoferes();
-			break;
-			case 3: eliminarChofer();
-			break;
+		switch (i) {
+			case 1:
+				agregarChofer();
+				break;
+			case 2:
+				break;
+			case 3:
+				eliminarChofer();
+				break;
 			default:
 				System.out.println("no hay mas funciones por ahora");
 		}
@@ -69,11 +70,12 @@ Scanner sc = new Scanner(System.in);
 		archivador.eliminarChoferArchivoTxt(choferaEliminar, "listaChoferes.txt");
 	}
 
-	public void mostrarChoferes() {
-		archivador.mostrarArchivo("listaChoferes.txt");
+	public void mostrarChoferes(JPanel mainPanel) {
+		archivador.mostrarArchivo("listaChoferes.txt", mainPanel);
 	}
 
-	public void agregarChofer() {Scanner scanner = new Scanner(System.in);
+	public void agregarChofer() {
+		Scanner scanner = new Scanner(System.in);
 
 		System.out.println("Ingrese los datos del Chofer:");
 
@@ -100,26 +102,12 @@ Scanner sc = new Scanner(System.in);
 		System.out.println("Chofer agregado exitosamente.");
 	}
 
-	private void eliminarCamion() {
-		System.out.println("ingrese la patente del camion que desea eliminar: ");
-		String camionaEliminar = sc.nextLine();
-		archivador.eliminarCamionArchivotxt(camionaEliminar, "listaCamiones.txt" );
+	public static void eliminarCamion(String camionaEliminar, JPanel mainPanel) {
+
+		archivador.eliminarCamionArchivotxt(camionaEliminar, "listaCamiones.txt", mainPanel);
 	}
 
-	public void agregarCamion() {
-		System.out.println("Ingrese los datos del camión:");
-
-		System.out.print("Patente: ");
-		String patente = sc.nextLine();
-
-		boolean permisoCirculacion = Utilitarios.solicitarBooleano("Permiso de Circulación al día (true/false): ");
-		boolean revisionTecnica = Utilitarios.solicitarBooleano("Revisión técnica al día (true/false): ");
-		boolean estadoActual = Utilitarios.solicitarBooleano("Estado actual del camión (true=funcionando, false=no funcionando): ");
-
-		System.out.print("Carga máxima del camión: ");
-		int cargaMax = Utilitarios.leerEntero();
-		sc.nextLine(); // Consumir el salto de línea pendiente después de nextInt()
-
+	public static void agregarCamion(String patente, boolean permisoCirculacion, boolean revisionTecnica, boolean estadoActual, int cargaMax) {
 		Camion nuevoCamion = new Camion(patente, permisoCirculacion, revisionTecnica, estadoActual, cargaMax);
 
 
@@ -132,12 +120,21 @@ Scanner sc = new Scanner(System.in);
 		System.out.println("Camión agregado exitosamente.");
 	}
 
-
-	private void agregarChoferaCamion(){
-
-		List<Chofer> choferes = archivador.leerListaChoferes();
-		archivador.asignarChoferaCamion(choferes);
+	private static Camion buscarCamionPorPatente(List<Camion> camiones, String patente) {
+		for (Camion camion : camiones) {
+			if (camion.getPatente().equals(patente)) {
+				return camion;
+			}
+		}
+		return null;
 	}
 
-
+	private static Chofer buscarChoferPorRut(List<Chofer> choferes, String rut) {
+		for (Chofer chofer : choferes) {
+			if (chofer.getRut().equals(rut)) {
+				return chofer;
+			}
+		}
+		return null;
+	}
 }

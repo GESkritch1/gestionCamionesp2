@@ -3,13 +3,13 @@ package Archivador;
 import ContextoProblema.Camion;
 import ContextoProblema.Chofer;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import java.io.File;
+import java.io.FileNotFoundException;
 public class Archivador {
 	private List<Camion> camiones;
 
@@ -21,20 +21,26 @@ public class Archivador {
 	private List<String> archivos;
 
 
-	public void mostrarArchivo(String rutaArchivo) {
+	public void mostrarArchivo(String rutaArchivo, JPanel mainPanel) {
 		try {
 			// Crea un objeto File con la ruta del archivo
 			File archivo = new File(rutaArchivo);
+			// Crea un objeto StringBuilder para almacenar el contenido del archivo
+			StringBuilder contenidoArchivo = new StringBuilder();
+
 			// Crea un objeto Scanner para leer el archivo
 			Scanner scanner = new Scanner(archivo);
-			// Lee el contenido del archivo línea por línea
+			// Lee el contenido del archivo línea por línea y lo agrega al StringBuilder
 			while (scanner.hasNextLine()) {
 				String linea = scanner.nextLine();
-				System.out.println(linea);
+				contenidoArchivo.append(linea).append("\n");
 			}
-
 			// Cierra el objeto Scanner
 			scanner.close();
+
+			// Muestra el contenido del archivo en una sola ventana
+			JOptionPane.showMessageDialog(mainPanel, contenidoArchivo.toString());
+
 		} catch (FileNotFoundException e) {
 			System.out.println("El archivo no pudo ser encontrado: " + e.getMessage());
 		}
@@ -63,7 +69,7 @@ public class Archivador {
 			System.out.println("Error al agregar el camión al archivo: " + e.getMessage());
 		}
 	}
-	public void eliminarCamionArchivotxt(String patente, String archivo) {
+	public void eliminarCamionArchivotxt(String patente, String archivo, JPanel mainPanel) {
 		// Leer el contenido del archivo
 		List<String> lineas = new ArrayList<>();
 
@@ -74,7 +80,7 @@ public class Archivador {
 				lineas.add(linea);
 			}
 		} catch (IOException e) {
-			System.out.println("Error al leer el archivo: " + e.getMessage());
+			JOptionPane.showMessageDialog(mainPanel, "Error al leer el archivo: " + e.getMessage());
 			return;
 		}
 
@@ -90,7 +96,7 @@ public class Archivador {
 		}
 
 		if (!camionEncontrado) {
-			System.out.println("El camión con patente " + patente + " no se encuentra en el archivo.");
+			JOptionPane.showMessageDialog(mainPanel, "no existe esa patente");
 			return;
 		}
 
@@ -104,9 +110,9 @@ public class Archivador {
 			for (String linea : lineas) {
 				writer.println(linea);
 			}
-			System.out.println("Camión eliminado del archivo: " + patente);
+			JOptionPane.showMessageDialog(mainPanel, "Camión eliminado del archivo: " + patente);
 		} catch (FileNotFoundException e) {
-			System.out.println("Error al guardar los cambios en el archivo: " + e.getMessage());
+			JOptionPane.showMessageDialog(mainPanel, "Error al guardar los cambios en el archivo: " + e.getMessage());
 		}
 	}
 
@@ -221,17 +227,17 @@ public class Archivador {
 
 		return camiones;
 	}
-	public void guardarListaCamionConChofer(List<Camion> camiones) {
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter("listaCamionConChofer.txt"))) {
-			for (Camion camion : camiones) {
-				bw.write(camion.obtenerDatosCamion()); // Escribe la representación del camión con chofer en el archivo
-				bw.newLine();
-			}
+	public void guardarCamionConChofer(Camion camion) {
+		try (FileWriter fileWriter = new FileWriter("listaCamionConChofer.txt", true);
+			 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			 PrintWriter writer = new PrintWriter(bufferedWriter)) {
+
+			writer.println(camion.obtenerDatosCamion());
+
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Error al guardar el camión con chofer en el archivo: " + e.getMessage());
 		}
 	}
-
 
 
 
