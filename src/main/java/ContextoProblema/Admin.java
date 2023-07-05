@@ -62,10 +62,10 @@ public class Admin {
 
 	}
 
-	private void eliminarChofer() {
+	private void eliminarChofer(String pedidoAeliminar, JPanel mainPanel) {
 		System.out.println("ingrese el rut del chofer que desea eliminar: ");
 		String choferaEliminar = sc.nextLine();
-		archivador.eliminarChoferArchivoTxt(choferaEliminar, "listaChoferes.txt");
+		archivador.eliminarCamionArchivotxt(choferaEliminar, "listaChoferes.txt", mainPanel);
 	}
 
 	public static void mostrarChoferes(JPanel mainPanel) {

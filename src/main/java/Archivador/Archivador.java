@@ -113,7 +113,7 @@ public class Archivador {
 		}
 
 		if (!camionEncontrado) {
-			JOptionPane.showMessageDialog(mainPanel, "no existe esa patente");
+			JOptionPane.showMessageDialog(mainPanel, "no existe ese dato");
 			return;
 		}
 
@@ -127,7 +127,7 @@ public class Archivador {
 			for (String linea : lineas) {
 				writer.println(linea);
 			}
-			JOptionPane.showMessageDialog(mainPanel, "Camión eliminado del archivo: " + patente);
+			JOptionPane.showMessageDialog(mainPanel, "Ha sido eliminado del archivo: " + patente);
 		} catch (FileNotFoundException e) {
 			JOptionPane.showMessageDialog(mainPanel, "Error al guardar los cambios en el archivo: " + e.getMessage());
 		}
