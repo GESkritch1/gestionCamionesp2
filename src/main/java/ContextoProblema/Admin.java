@@ -51,12 +51,10 @@ public class Admin {
 		int i = Utilitarios.leerEntero();
 		switch (i) {
 			case 1:
-				agregarChofer();
 				break;
 			case 2:
 				break;
 			case 3:
-				eliminarChofer();
 				break;
 			default:
 				System.out.println("no hay mas funciones por ahora");
@@ -70,33 +68,17 @@ public class Admin {
 		archivador.eliminarChoferArchivoTxt(choferaEliminar, "listaChoferes.txt");
 	}
 
-	public void mostrarChoferes(JPanel mainPanel) {
+	public static void mostrarChoferes(JPanel mainPanel) {
 		archivador.mostrarArchivo("listaChoferes.txt", mainPanel);
 	}
 
-	public void agregarChofer() {
-		Scanner scanner = new Scanner(System.in);
+	public static void agregarChofer(String nombre, String rut, int edad, boolean licencia, boolean estadoChofer) {
+		Chofer nuevoChofer = new Chofer(nombre, rut, edad, licencia, estadoChofer);
 
-		System.out.println("Ingrese los datos del Chofer:");
-
-		System.out.print("Nombre: ");
-		String nombre = scanner.nextLine();
-
-		System.out.print("Rut: ");
-		String rut = scanner.nextLine();
-
-		System.out.print("Edad: ");
-		int edad = Utilitarios.leerEntero();
-
-		boolean licencia = Utilitarios.solicitarBooleano("Licencia (true=tiene al día, false=no la tiene al día): ");
-		boolean estado = Utilitarios.solicitarBooleano("Estado del Chofer (true=trabajando, false=no puede trabajar): ");
-
-		Chofer nuevoChofer = new Chofer(nombre, rut, edad, licencia, estado);
-
-		// Agregar el nuevo camión a la lista
+		// Agregar el nuevo chofer a la lista
 		nuevoChofer.agregarChoferLista();
 
-		// Guardar el nuevo camión en el archivo de texto
+		// Guardar el nuevo chofer en el archivo de texto
 		archivador.agregarChoferATexto("listaChoferes.txt", nuevoChofer);
 
 		System.out.println("Chofer agregado exitosamente.");
@@ -137,4 +119,5 @@ public class Admin {
 		}
 		return null;
 	}
+
 }

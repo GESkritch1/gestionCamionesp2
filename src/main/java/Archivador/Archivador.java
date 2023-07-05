@@ -2,6 +2,7 @@ package Archivador;
 
 import ContextoProblema.Camion;
 import ContextoProblema.Chofer;
+import ContextoProblema.Pedido;
 
 import javax.swing.*;
 import java.io.*;
@@ -45,6 +46,7 @@ public class Archivador {
 			System.out.println("El archivo no pudo ser encontrado: " + e.getMessage());
 		}
 	}
+
 	public void agregarChoferATexto(String nombreArchivo, Chofer chofer) {
 		try (FileWriter fileWriter = new FileWriter(nombreArchivo, true);
 			 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -57,18 +59,33 @@ public class Archivador {
 			System.out.println("Error al agregar el chofer al archivo: " + e.getMessage());
 		}
 	}
-	public void agregarCamionATexto(String nombreArchivo, Camion camion) {
-		try (FileWriter fileWriter = new FileWriter(nombreArchivo, true);
-			 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-			 PrintWriter writer = new PrintWriter(bufferedWriter)) {
 
-			writer.println("Patente: " + camion.getPatente()+"; Permiso de Circulación al día: " + camion.getPermisoCirculacion()+"; Revisión técnica al día: " + camion.getRevisionTecnica()+ "; Estado actual del camión (true=funcionando, false=no funcionando): " + camion.getEstadoActual()+"; Carga máxima del camión: " + camion.getCargaMax());
+	public void agregarCamionATexto(String nombreArchivo, Camion camion) {
+				try (FileWriter fileWriter = new FileWriter(nombreArchivo, true);
+					 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+					 PrintWriter writer = new PrintWriter(bufferedWriter)) {
+
+					writer.println("Patente: " + camion.getPatente()+"; Permiso de Circulación al día: " + camion.getPermisoCirculacion()+"; Revisión técnica al día: " + camion.getRevisionTecnica()+ "; Estado actual del camión (true=funcionando, false=no funcionando): " + camion.getEstadoActual()+"; Carga máxima del camión: " + camion.getCargaMax());
 
 			System.out.println("Camión agregado al archivo: " + nombreArchivo);
 		} catch (IOException e) {
 			System.out.println("Error al agregar el camión al archivo: " + e.getMessage());
 		}
 	}
+
+	public void agregarPedidoATexto(String nombreArchivo, Pedido pedido) {
+		try (FileWriter fileWriter = new FileWriter(nombreArchivo, true);
+			 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			 PrintWriter writer = new PrintWriter(bufferedWriter)) {
+
+			writer.println("Código pedido:"+ pedido.getCodigo()+";Camion:"+";Fecha inicial:"+pedido.getFechaInicial() +";Fecha llegada:"+ pedido.getFechaFinal()+";Localidad de donde se envio:"+pedido.getLugarSalida()+";Destino:"+pedido.getLugarDestino()+";Tiempo Extimado:"+pedido.getTiempo());
+
+			System.out.println("Pedido agregado al archivo: " + nombreArchivo);
+		} catch (IOException e) {
+			System.out.println("Error al agregar el Pedido al archivo: " + e.getMessage());
+		}
+	}
+
 	public void eliminarCamionArchivotxt(String patente, String archivo, JPanel mainPanel) {
 		// Leer el contenido del archivo
 		List<String> lineas = new ArrayList<>();
@@ -116,55 +133,6 @@ public class Archivador {
 		}
 	}
 
-	public void eliminarChoferArchivoTxt(String rut, String archivo) {
-		// Leer el contenido del archivo
-		List<String> lineas = new ArrayList<>();
-
-		try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
-			String linea;
-
-			while ((linea = br.readLine()) != null) {
-				lineas.add(linea);
-			}
-		} catch (IOException e) {
-			System.out.println("Error al leer el archivo: " + e.getMessage());
-			return;
-		}
-
-		// Buscar el chofer en las líneas y eliminarlo
-		boolean choferEncontrado = false;
-		List<Integer> indicesEliminar = new ArrayList<>(); // Índices de las líneas a eliminar
-
-		for (int i = 0; i < lineas.size(); i++) {
-			String linea = lineas.get(i);
-
-			// Buscar el RUT del chofer sin puntos ni guión
-			if (linea.contains(rut)) {
-				choferEncontrado = true;
-				indicesEliminar.add(i); // Almacenar el índice de la línea a eliminar
-			}
-		}
-
-		if (!choferEncontrado) {
-			System.out.println("El chofer con RUT " + rut + " no se encuentra en el archivo.");
-			return;
-		}
-
-		// Eliminar las líneas correspondientes al chofer
-		for (int i : indicesEliminar) {
-			lineas.remove(i);
-		}
-
-		// Guardar las líneas actualizadas en el archivo
-		try (PrintWriter writer = new PrintWriter(archivo)) {
-			for (String linea : lineas) {
-				writer.println(linea);
-			}
-			System.out.println("Chofer eliminado del archivo: " + rut);
-		} catch (FileNotFoundException e) {
-			System.out.println("Error al guardar los cambios en el archivo: " + e.getMessage());
-		}
-	}
 
 
 	public List<Chofer> leerListaChoferes() {
@@ -194,6 +162,7 @@ public class Archivador {
 
 		return choferes;
 	}
+
 	public List<Camion> asignarChoferaCamion(List<Chofer> choferes) {
 		List<Camion> camiones = new ArrayList<>();
 
@@ -227,6 +196,7 @@ public class Archivador {
 
 		return camiones;
 	}
+
 	public void guardarCamionConChofer(Camion camion) {
 		try (FileWriter fileWriter = new FileWriter("listaCamionConChofer.txt", true);
 			 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);

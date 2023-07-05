@@ -49,13 +49,20 @@ public class VentanaOpcionesCamiones extends JFrame{
         mostrarCamionesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Admin.mostrarCamiones(mainPanel);
+                try {
+                    Admin.mostrarCamiones(mainPanel);
 
+                } catch (Exception E) {
+                    JOptionPane.showMessageDialog(mainPanel, "El archivo no existe");
+                }
             }
         });
         agregarChoferAAlgunButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+
+
 
             }
         });
