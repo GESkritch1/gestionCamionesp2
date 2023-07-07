@@ -1,4 +1,5 @@
-Nombre: benjamin; Rut: 202938473; Licencia al día: true; Estado conductor (true=trabajando, false=no trabajando): false
-Nombre: Cristobal; Rut: 243553453; Licencia al día: false; Estado conductor (true=trabajando, false=no trabajando): false
-Nombre: Mauricio; Rut: 20983443k; Licencia al día: true; Estado conductor (true=trabajando, false=no trabajando): true
-Nombre: Martin; Rut: 210770224; Licencia al día: false; Estado conductor (true=trabajando, false=no trabajando): true
+Rut: 202938473; Nombre: benjamin; Licencia al día: A4; Estado conductor (true=trabajando, false=no trabajando): false
+Rut: 243553453; Nombre: Cristobal; Licencia al día: A5; Estado conductor (true=trabajando, false=no trabajando): false
+Rut: 210770224; Nombre: Martin; Licencia al día: A4; Estado conductor (true=trabajando, false=no trabajando): true
+Rut: 199573772; Nombre: Ricardo; Licencia al día: A4; Estado conductor (true=trabajando, false=no trabajando): false
+Rut: 20983443k; Nombre: Mauricio; Licencia al día: A5; Estado conductor (true=trabajando, false=no trabajando): true

@@ -3,7 +3,6 @@ package ContextoProblema;
 import Archivador.Archivador;
 
 import javax.swing.*;
-import java.util.List;
 import java.util.Scanner;
 
 
@@ -11,68 +10,20 @@ public class Admin {
 	static Archivador archivador = new Archivador();
 	static Scanner sc = new Scanner(System.in);
 
-	public void opcionesPedido() {
-
-	}
-
-	public void opcionesCamiones() {
-		System.out.println("(1) agregar un camion a la lista de camiones");
-		System.out.println("(2) eliminar Camion ");
-		System.out.println("(3) agregar Chofer a algun camion (en mantenimiento)");
-		System.out.println("(4) mostrar Camiones de la lista");
-		int i = Utilitarios.leerEntero();
-
-		switch (i) {
-			case 1:
-				break;
-			case 2:
-				break;
-			case 3:
-				System.out.println("esta en mantenimiento");
-				break;
-			case 4:
-				break;
-			default:
-				System.out.println("no existe esa opcion");
-				break;
-
-
-		}
-	}
-
 	public static void mostrarCamiones(JPanel mainPanel) {
 		archivador.mostrarArchivo("listaCamiones.txt", mainPanel);
 	}
 
-	public void opcionesChoferes() {
-		System.out.println("(1) agregar Chofer a la lista");
-		System.out.println("(2) mostrar Choferes de la lista");
-		System.out.println("(3) eliminar Chofer de la lista");
-		int i = Utilitarios.leerEntero();
-		switch (i) {
-			case 1:
-				break;
-			case 2:
-				break;
-			case 3:
-				break;
-			default:
-				System.out.println("no hay mas funciones por ahora");
-		}
+	public static void eliminarChofer(String choferaEliminar, JPanel mainPanel) {
 
-	}
-
-	private void eliminarChofer(String pedidoAeliminar, JPanel mainPanel) {
-		System.out.println("ingrese el rut del chofer que desea eliminar: ");
-		String choferaEliminar = sc.nextLine();
-		archivador.eliminarCamionArchivotxt(choferaEliminar, "listaChoferes.txt", mainPanel);
+		archivador.eliminarChoferArchivoTxt(choferaEliminar, "listaChoferes.txt", mainPanel);
 	}
 
 	public static void mostrarChoferes(JPanel mainPanel) {
 		archivador.mostrarArchivo("listaChoferes.txt", mainPanel);
 	}
 
-	public static void agregarChofer(String nombre, String rut, int edad, boolean licencia, boolean estadoChofer) {
+	public static void agregarChofer(String nombre, String rut, int edad, String licencia, boolean estadoChofer) {
 		Chofer nuevoChofer = new Chofer(nombre, rut, edad, licencia, estadoChofer);
 
 		// Agregar el nuevo chofer a la lista
@@ -89,7 +40,7 @@ public class Admin {
 		archivador.eliminarCamionArchivotxt(camionaEliminar, "listaCamiones.txt", mainPanel);
 	}
 
-	public static void agregarCamion(String patente, boolean permisoCirculacion, boolean revisionTecnica, boolean estadoActual, int cargaMax) {
+	public static void agregarCamion(String patente, boolean permisoCirculacion, boolean revisionTecnica, boolean estadoActual, int cargaMax,JPanel mainPanel) {
 		Camion nuevoCamion = new Camion(patente, permisoCirculacion, revisionTecnica, estadoActual, cargaMax);
 
 
@@ -97,27 +48,11 @@ public class Admin {
 		nuevoCamion.agregarCamionLista();
 
 		// Guardar el nuevo camión en el archivo de texto
-		archivador.agregarCamionATexto("listaCamiones.txt", nuevoCamion);
-
-		System.out.println("Camión agregado exitosamente.");
+		archivador.agregarCamionATexto("listaCamiones.txt", nuevoCamion,mainPanel);
 	}
 
-	private static Camion buscarCamionPorPatente(List<Camion> camiones, String patente) {
-		for (Camion camion : camiones) {
-			if (camion.getPatente().equals(patente)) {
-				return camion;
-			}
-		}
-		return null;
-	}
-
-	private static Chofer buscarChoferPorRut(List<Chofer> choferes, String rut) {
-		for (Chofer chofer : choferes) {
-			if (chofer.getRut().equals(rut)) {
-				return chofer;
-			}
-		}
-		return null;
+	public static void agregarChoferaCamionAD(String patente, String rut, JPanel mainPanel){
+		archivador.agregarChoferaCamion("listaCamionConChofer.txt", patente, rut, mainPanel);
 	}
 
 }

@@ -7,6 +7,7 @@ import java.util.*;
 
 public class Pedido {
 
+	private String distancia;
 	List<Camion> transporte;
 	private  String codigo;
 	private int fechaInicial;
@@ -31,20 +32,22 @@ public class Pedido {
 		transporte.add(camion);
 	}
 
-	public Pedido(String Codigo,List<Camion> Camion,int fechaInicial,int fechaFinal,String lugarSalida,String lugarDestino, int tiempo){
+	public Pedido(String Codigo,List<Camion> Camion,int fechaInicial,int fechaFinal,String lugarDestino,String distancia, int tiempo){
+		this.codigo = Codigo;
 		this.transporte = Camion;
 		this.fechaInicial = fechaInicial;
 		this.fechaFinal= fechaFinal;
-		this.lugarSalida= lugarSalida;
+		this.lugarSalida= "Temuco";
 		this.lugarDestino = lugarDestino;
+		this.distancia = distancia;
 		this.tiempo = tiempo;
 
 	}
 
-	public void agregarPedido(String codigo,List<Camion> Camion,int fechaInicial,int fechaFinal,String lugarSalida,String lugarDestino, int tiempo) {
+	public void agregarPedido(String codigo,List<Camion> Camion,int fechaInicial,int fechaFinal,String lugarSalida,String lugarDestino, int tiempo,JPanel mainPanel) {
 		Pedido nuevoPedido = new Pedido(codigo,Camion,fechaInicial,fechaFinal,lugarSalida,lugarDestino,tiempo);
 		Archivador ar = new Archivador();
-		ar.agregarPedidoATexto("listaPedidos.txt",nuevoPedido);
+		ar.agregarPedidoATexto("listaPedidos.txt",nuevoPedido,mainPanel);
 	}
 
 	public void eliminarPedido(String pedidoAeliminar, JPanel mainPanel) {

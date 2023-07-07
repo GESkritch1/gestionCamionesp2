@@ -57,8 +57,7 @@ public class VentanaAgregarCamion extends JFrame{
                     }
                     int cargaMax = Integer.parseInt(setCargaMax.getText());
 
-                    Admin.agregarCamion(patente,permisoCirculacion,revisionTecnica, estadoActual, cargaMax);
-                    JOptionPane.showMessageDialog(mainPanel, "se guardo correctamente");
+                    Admin.agregarCamion(patente,permisoCirculacion,revisionTecnica, estadoActual, cargaMax,mainPanel);
                     VentanaOpcionesCamiones v = new VentanaOpcionesCamiones();
                     v.setVisible(true);
                     setVisible(false);

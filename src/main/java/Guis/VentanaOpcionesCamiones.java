@@ -60,8 +60,7 @@ public class VentanaOpcionesCamiones extends JFrame{
         agregarChoferAAlgunButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
+               Admin.agregarChoferaCamionAD("MARART", "20983443k", mainPanel);
 
 
             }

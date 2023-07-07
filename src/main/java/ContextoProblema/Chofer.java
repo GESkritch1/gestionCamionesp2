@@ -11,12 +11,14 @@ public class Chofer implements Serializable {
 	private String nombre;
 	private String rut;
 	private int edad;
-	private boolean licencia;
+	private String licencia;
 	private boolean estadoChofer;
 
 
 
-	public Chofer(String nombre, String rut, int edad, boolean licencia, boolean estadoChofer) {
+
+
+	public Chofer(String nombre, String rut, int edad, String licencia, boolean estadoChofer) {
 		this.nombre = nombre;
 		this.rut = rut;
 		this.edad = edad;
@@ -36,7 +38,7 @@ public class Chofer implements Serializable {
 		return this.edad;
 	}
 
-	public boolean getLicencia() {
+	public String getLicencia() {
 		return this.licencia;
 	}
 
@@ -58,20 +60,11 @@ public class Chofer implements Serializable {
 		}
 	}
 
-	public void elimarChoferLista() {
-		listaChoferes.remove(this);
+
+	public static void leerListaChoferes(){
+
 	}
 
 
 
-	public boolean isEstadoChofer() {
-		return this.estadoChofer;
-	}
-
-	public void setEstadoChofer(boolean estadoChofer) {
-		this.estadoChofer = estadoChofer;
-	}
-
-	public static void verTodosLosChoferes() {
-	}
 }

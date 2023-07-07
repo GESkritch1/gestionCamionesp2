@@ -49,13 +49,11 @@ public class VentanaAgregarChofer extends JFrame {
                         throw new IllegalStateException("Esa opcion no existe en el estado de Chofer");
                     }
                     String licenciaTemp2 = licenciaTemp.getText();
-                    boolean licencia;
-                    if (licenciaTemp2.equals("si")){
-                        licencia = true;
-                    }else if (licenciaTemp2.equals("no")){
-                        licencia = false;
-                    }else{
-                        throw new IllegalStateException("Esa opcion no existe en el apartado de licencia");
+                    String licencia;
+                    if (licenciaTemp2.equals("A4")||licenciaTemp2.equals("A5")){
+                         licencia = licenciaTemp2;
+                    }else {
+                        throw new IllegalStateException("Esa opcion no existe en el estado de Chofer");
                     }
 
 

@@ -1,6 +1,7 @@
 package Guis;
 
 import ContextoProblema.Admin;
+import ContextoProblema.Chofer;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -13,6 +14,7 @@ public class VentanaOpcionesChoferes extends JFrame{
     private JButton eliminarChoferDeLaButton;
     private JButton mostrarChoferesDeLaButton;
     private JButton volverALaVentanaButton;
+    private JButton editarChoferesButton;
 
     public VentanaOpcionesChoferes() {
         setContentPane(mainPanel);
@@ -47,6 +49,22 @@ public class VentanaOpcionesChoferes extends JFrame{
                 } catch (Exception E) {
                     JOptionPane.showMessageDialog(mainPanel, "El archivo no existe");
                 }
+            }
+        });
+        eliminarChoferDeLaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaEliminarChofer v = new VentanaEliminarChofer();
+                v.setVisible(true);
+                setVisible(false);
+
+
+            }
+        });
+        editarChoferesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Chofer.leerListaChoferes();
             }
         });
     }
