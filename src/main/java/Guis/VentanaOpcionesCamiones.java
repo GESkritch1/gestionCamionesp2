@@ -1,19 +1,23 @@
 package Guis;
 
 import ContextoProblema.Admin;
+import ContextoProblema.Camion;
+import ContextoProblema.Chofer;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
-public class VentanaOpcionesCamiones extends JFrame{
-    private Admin admin = new Admin();
+public class VentanaOpcionesCamiones extends JFrame {
     private JPanel mainPanel;
     private JButton agregarCamionButton;
     private JButton eliminarCamionesButton;
     private JButton agregarChoferAAlgunButton;
     private JButton mostrarCamionesButton;
     private JButton volverALaVentanaButton;
+
 
     public VentanaOpcionesCamiones() {
         setContentPane(mainPanel);
@@ -22,6 +26,7 @@ public class VentanaOpcionesCamiones extends JFrame{
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
+
         agregarCamionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -30,6 +35,7 @@ public class VentanaOpcionesCamiones extends JFrame{
                 setVisible(false);
             }
         });
+
         volverALaVentanaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -38,6 +44,7 @@ public class VentanaOpcionesCamiones extends JFrame{
                 setVisible(false);
             }
         });
+
         eliminarCamionesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -46,6 +53,7 @@ public class VentanaOpcionesCamiones extends JFrame{
                 setVisible(false);
             }
         });
+
         mostrarCamionesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -57,14 +65,15 @@ public class VentanaOpcionesCamiones extends JFrame{
                 }
             }
         });
+
         agregarChoferAAlgunButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               Admin.agregarChoferaCamionAD("MARART", "20983443k", mainPanel);
-
-
+                String patente = "KAKEKI";
+                String rut = "184564575";
+                Admin.agregarChoferaCamionAD(patente, rut,mainPanel);
             }
         });
-    }
 
+    }
 }

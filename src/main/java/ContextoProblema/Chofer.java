@@ -26,6 +26,13 @@ public class Chofer implements Serializable {
 		this.estadoChofer = estadoChofer;
 	}
 
+	public Chofer(String nombre, String rut, String licencia, boolean estadoChofer) {this.nombre = nombre;
+		this.nombre = nombre;
+		this.rut = rut;
+		this.licencia = licencia;
+		this.estadoChofer = estadoChofer;
+	}
+
 	public String getNombre() {
 		return this.nombre;
 	}
