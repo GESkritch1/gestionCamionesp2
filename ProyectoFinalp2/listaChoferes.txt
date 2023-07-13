@@ -1,0 +1,4 @@
+Rut: 243553453; Nombre: Cristobal; Licencia al día: A5; Estado conductor (true=trabajando, false=no trabajando): false
+Rut: 210770224; Nombre: Martin; Licencia al día: A4; Estado conductor (true=trabajando, false=no trabajando): true
+Rut: 199573772; Nombre: Ricardo; Licencia al día: A4; Estado conductor (true=trabajando, false=no trabajando): false
+Rut: 184564575; Nombre: Tritu; Licencia al día: A5; Estado conductor (true=trabajando, false=no trabajando): true

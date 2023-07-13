@@ -1,0 +1,26 @@
+Destino: Valdivia; 190 km
+Destino: La Unión; 214 km
+Destino: Panguipulli; 146 km
+Destino: Río Bueno; 220 km
+Destino: Los Lagos; 164 km
+Destino: Paillaco; 153 km
+Destino: San Jose de la Mariquina; 121 km
+Destino: Lanco; 98 km
+Destino: Futrono; 214 km
+Destino: Lago Ranco; 243 km
+Destino: Máfil; 132 km
+Destino: Corral; 188 km
+Destino: Angol; 104 km
+Destino: Carahue; 88 km
+Destino: Collipulli; 109 km
+Destino: Cunco; 33 km
+Destino: Curacautín; 103 km
+Destino: Freire; 19 km
+Destino: Gorbea; 21 km
+Destino: Labranza; 9 km
+Destino: Lautaro; 25 km
+Destino: Loncoche; 41 km
+Destino: Nueva Imperial; 35 km
+Destino: Padre Las Casas; 8 km
+Destino: Pucón; 82 km
+Destino: Villarrica; 76 km
