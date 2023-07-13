@@ -1,1 +1,0 @@
-Código pedido: 0001; Camion: DADADA; Fecha inicial: 20230712; Fecha llegada: 20230715; Localidad de donde se envio: Temuco; Destino: Valdivia; distancia: 300km; Tiempo Estimado: 5 horas aproximadas(se le suma 2 horas al tiempo estimado por problemas de algun taco en el camino u otro inconveniente)
