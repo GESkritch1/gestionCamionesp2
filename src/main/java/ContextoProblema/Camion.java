@@ -3,7 +3,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Camion implements Serializable {
+public class Camion {
 
 	public static List<Camion> listaCamiones = new ArrayList<>();
 	private String patente;
