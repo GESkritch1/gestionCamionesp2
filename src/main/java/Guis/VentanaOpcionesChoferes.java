@@ -61,11 +61,5 @@ public class VentanaOpcionesChoferes extends JFrame{
 
             }
         });
-        editarChoferesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Chofer.leerListaChoferes();
-            }
-        });
     }
 }

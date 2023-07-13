@@ -1,26 +1,26 @@
-Valdivia: 190 km
-La Unión: 214 km
-Panguipulli: 248 km
-Río Bueno: 109 km
-Los Lagos: 137 km
-Paillaco: 153 km
-San Jose de la Mariquina: 196 km
-Lanco: 98 km
-Futrono: 273 km
-Lago Ranco: 259 km
-Máfil: 193 km
-Corral: 188 km
-Angol: 104 km
-Carahue: 88 km
-Collipulli: 109 km
-Cunco: 33 km
-Curacautín: 103 km
-Freire: 19 km
-Gorbea: 21 km
-Labranza: 9 km
-Lautaro: 25 km
-Loncoche: 41 km
-Nueva Imperial: 35 km
-Padre Las Casas: 8 km
-Pucón: 82 km
-Villarrica: 76 km
+Destino: Valdivia; 190 km
+Destino: La Unión; 214 km
+Destino: Panguipulli; 146 km
+Destino: Río Bueno; 220 km
+Destino: Los Lagos; 164 km
+Destino: Paillaco; 153 km
+Destino: San Jose de la Mariquina; 121 km
+Destino: Lanco; 98 km
+Destino: Futrono; 214 km
+Destino: Lago Ranco; 243 km
+Destino: Máfil; 132 km
+Destino: Corral; 188 km
+Destino: Angol; 104 km
+Destino: Carahue; 88 km
+Destino: Collipulli; 109 km
+Destino: Cunco; 33 km
+Destino: Curacautín; 103 km
+Destino: Freire; 19 km
+Destino: Gorbea; 21 km
+Destino: Labranza; 9 km
+Destino: Lautaro; 25 km
+Destino: Loncoche; 41 km
+Destino: Nueva Imperial; 35 km
+Destino: Padre Las Casas; 8 km
+Destino: Pucón; 82 km
+Destino: Villarrica; 76 km

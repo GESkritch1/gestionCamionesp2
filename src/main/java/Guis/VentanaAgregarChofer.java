@@ -23,6 +23,7 @@ public class VentanaAgregarChofer extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
+
         volverALaVentanaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -57,7 +58,7 @@ public class VentanaAgregarChofer extends JFrame {
                         throw new IllegalStateException("Esa opcion no existe en el tipo de licencia");
                     }
 
-                    Admin.agregarChofer(nombre, rut,edad,licencia,estadoChofer);
+                    Admin.agregarChofer(nombre, rut,edad,licencia,estadoChofer,mainPanel);
                     JOptionPane.showMessageDialog(mainPanel, "se guardo correctamente");
                     VentanaOpcionesChoferes v = new VentanaOpcionesChoferes();
                     v.setVisible(true);
@@ -65,10 +66,6 @@ public class VentanaAgregarChofer extends JFrame {
                 }catch (Exception E){
                     JOptionPane.showMessageDialog(mainPanel, "ocurrio un error revise los datos puestos");
                 }
-
-
-
-
 
             }
         });

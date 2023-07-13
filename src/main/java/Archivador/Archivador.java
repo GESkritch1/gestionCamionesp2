@@ -3,6 +3,8 @@ package Archivador;
 import ContextoProblema.Camion;
 import ContextoProblema.Chofer;
 import ContextoProblema.Pedido;
+import UsosyMas.Distancia;
+import UsosyMas.Utilitarios;
 
 import javax.swing.*;
 import java.io.*;
@@ -12,15 +14,16 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 public class Archivador {
-	List<Chofer> listaChoferes = convertirArchivoChoferes("listaChoferes.txt");
-	List<Camion> listaCamiones = convertirArchivoCamiones("listaCamiones.txt");
-
+	static List<Chofer> listaChoferes = convertirArchivoChoferes("listaChoferes.txt");
+	static List<Camion> listaCamiones = convertirArchivoCamiones("listaCamiones.txt");
 	List<Pedido> listaPedidos = convertirArchivoPedidos("listaPedidos.txt");
-	public Archivador() {
+	List<Distancia> listaDistancias = convertirArchivoDistancias("listaDistancias.txt");
 
-		// Ahora puedes utilizar las listas de choferes y camiones en tu programa
-		// Realiza las operaciones que necesites con los datos convertidos
-	}
+	/***
+	 *Este método lee el contenido de un archivo de pedidos y lo convierte en una lista de objetos Pedido. Sería útil agregar manejo de excepciones más descriptivo en el bloque catch para proporcionar información detallada sobre los errores de lectura del archivo.
+	 * @param archivo
+	 * @return listaPedidos
+	 */
 	public static List<Pedido> convertirArchivoPedidos(String archivo) {
 		List<Pedido> listaPedidos = new ArrayList<>();
 		try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
@@ -33,11 +36,16 @@ public class Archivador {
 				listaPedidos.add(pedido);
 			}
 		} catch (IOException e) {
-			System.out.println("Error al leer el archivo: " + e.getMessage());
 		}
 
 		return listaPedidos;
 	}
+
+	/***
+	 * Este método lee el contenido de un archivo de choferes y lo convierte en una lista de objetos Chofer. Al igual que el método anterior, sería útil agregar un manejo de excepciones más descriptivo en el bloque catch para proporcionar información detallada sobre los errores de lectura del archivo
+	 * @param archivo
+	 * @return listaChoferes
+	 */
 	public static List<Chofer> convertirArchivoChoferes(String archivo) {
 		List<Chofer> listaChoferes = new ArrayList<>();
 
@@ -56,11 +64,16 @@ public class Archivador {
 				listaChoferes.add(chofer);
 			}
 		} catch (IOException e) {
-			System.out.println("Error al leer el archivo: " + e.getMessage());
 		}
 
 		return listaChoferes;
 	}
+
+	/***
+	 * Este método lee el contenido de un archivo de camiones y lo convierte en una lista de objetos Camion. Sería útil agregar manejo de excepciones más descriptivo en el bloque catch para proporcionar información detallada sobre los errores de lectura del archivo.
+	 * @param archivo
+	 * @return listaCamiones
+	 */
 	public static List<Camion> convertirArchivoCamiones(String archivo) {
 		List<Camion> listaCamiones = new ArrayList<>();
 
@@ -82,16 +95,43 @@ public class Archivador {
 				listaCamiones.add(camion);
 			}
 		} catch (IOException e) {
-			System.out.println("Error al leer el archivo: " + e.getMessage());
 		}
 
 		return listaCamiones;
 	}
 
-	private List<String> archivos;
+	/***
+	 *Este método lee el contenido de un archivo de distancias y lo convierte en una lista de objetos Distancia. Sería útil agregar manejo de excepciones más descriptivo en el bloque catch para proporcionar información detallada sobre los errores de lectura del archivo
+	 * @param archivo
+	 * @return  listaDistancias
+	 */
+	public static List<Distancia> convertirArchivoDistancias(String archivo) {
+		List<Distancia> listaDistancias = new ArrayList<>();
 
+		try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+			String linea;
 
-	public void mostrarArchivo(String rutaArchivo, JPanel mainPanel) {
+			while ((linea = br.readLine()) != null) {
+				String[] partes = linea.split("; ");
+
+				String ciudad = partes[0].substring(partes[0].indexOf(": ") + 2);
+				int distancia = Integer.parseInt(partes[1].substring(0, partes[1].indexOf(" km")));
+
+				Distancia distanciasDesdeTemuco = new Distancia(ciudad, distancia);
+				listaDistancias.add(distanciasDesdeTemuco);
+			}
+		} catch (IOException e) {
+				}
+
+		return listaDistancias;
+	}
+
+	/***
+	 * Este método muestra el contenido de un archivo en una ventana emergente. Parece estar implementado correctamente.
+	 * @param rutaArchivo
+	 * @param mainPanel
+	 */
+	public static void mostrarArchivo(String rutaArchivo, JPanel mainPanel) {
 		try {
 			// Crea un objeto File con la ruta del archivo
 			File archivo = new File(rutaArchivo);
@@ -116,19 +156,32 @@ public class Archivador {
 		}
 	}
 
-	public void agregarChoferATexto(String nombreArchivo, Chofer chofer) {
+	/***
+	 * Este método agrega un objeto Chofer al archivo especificado. Sería útil agregar un manejo de excepciones más descriptivo en caso de errores al agregar el chofer al archivo.
+	 * @param nombreArchivo
+	 * @param chofer
+	 * @param mainPanel
+	 */
+	public static void agregarChoferATexto(String nombreArchivo, Chofer chofer,JPanel mainPanel) {
 		try (FileWriter fileWriter = new FileWriter(nombreArchivo, true);
 			 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 			 PrintWriter writer = new PrintWriter(bufferedWriter)) {
 
-			writer.println("Rut: " + chofer.getRut()+"; Nombre: " + chofer.getNombre()+"; Licencia al día: " + chofer.getLicencia()+"; Estado conductor (true=trabajando, false=no trabajando): " + chofer.getEstadoChofer());
+			writer.println("Rut: " + chofer.getRut() + "; Nombre: " + chofer.getNombre() + "; Licencia al día: " + chofer.getLicencia() + "; Estado conductor (true=trabajando, false=no trabajando): " + chofer.getEstadoChofer());
 
 			System.out.println("Chofer agregado al archivo: " + nombreArchivo);
 		} catch (IOException e) {
 			System.out.println("Error al agregar el chofer al archivo: " + e.getMessage());
 		}
 	}
-	public void agregarCamionATexto(String nombreArchivo, Camion camion, JPanel mainPanel) {
+
+	/***
+	 * Este método agrega un objeto Camion al archivo especificado. Sería útil agregar un manejo de excepciones más descriptivo en caso de errores al agregar el camión al archivo.
+	 * @param nombreArchivo
+	 * @param camion
+	 * @param mainPanel
+	 */
+	public static void agregarCamionATexto(String nombreArchivo, Camion camion, JPanel mainPanel) {
 		try (FileReader fileReader = new FileReader(nombreArchivo);
 			 BufferedReader bufferedReader = new BufferedReader(fileReader)) {
 
@@ -145,37 +198,71 @@ public class Archivador {
 			}
 
 			if (existePatente) {
-				JOptionPane.showMessageDialog(mainPanel,"El camión con patente " + patente + " ya existe en el archivo.");
+				JOptionPane.showMessageDialog(mainPanel, "El camión con patente " + patente + " ya existe en el archivo.");
 			} else {
 				try (FileWriter fileWriter = new FileWriter(nombreArchivo, true);
 					 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 					 PrintWriter writer = new PrintWriter(bufferedWriter)) {
-
+					Utilitarios utilitarios = new Utilitarios();
 					writer.println("Patente: " + camion.getPatente() + "; Permiso de Circulación al día: " + camion.getPermisoCirculacion() + "; Revisión técnica al día: " + camion.getRevisionTecnica() + "; Estado actual del camión (true=funcionando, false=no funcionando): " + camion.getEstadoActual() + "; Carga máxima del camión: " + camion.getCargaMax());
 
-					JOptionPane.showMessageDialog(mainPanel,"Camión agregado al archivo: " + nombreArchivo);
+					JOptionPane.showMessageDialog(mainPanel, "Camión agregado al archivo: " + nombreArchivo);
 				} catch (IOException e) {
-					JOptionPane.showMessageDialog(mainPanel,"Error al agregar el camión al archivo: " + e.getMessage());
+					JOptionPane.showMessageDialog(mainPanel, "Error al agregar el camión al archivo: " + e.getMessage());
 				}
 			}
 		} catch (IOException e) {
-			System.out.println("Error al leer el archivo: " + e.getMessage());
+			JOptionPane.showMessageDialog(mainPanel,"Error al leer el archivo: " + e.getMessage());
 		}
 	}
 
-	public void agregarPedidoATexto(String nombreArchivo, Pedido pedido) {
-		try (FileWriter fileWriter = new FileWriter(nombreArchivo, true);
-			 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-			 PrintWriter writer = new PrintWriter(bufferedWriter)) {
-			int tiempodeEntregaAprox = pedido.getTiempo() +2;
-			writer.println("Código pedido: "+ pedido.getCodigo()+"; Camion: "+ pedido.getPatenteCamion()+"; Fecha inicial: "+pedido.getFechaInicial() +"; Fecha llegada: "+ pedido.getFechaFinal()+"; Localidad de donde se envio: "+pedido.getLugarSalida()+"; Destino: "+pedido.getLugarDestino()+"; distancia: "+pedido.getDistancia() +"km"+"; Tiempo Estimado: "+tiempodeEntregaAprox+ " horas aproximadas(se le suma 2 horas al tiempo estimado por problemas de algun taco en el camino u otro inconveniente)");
+	/***
+	 * Este método agrega un objeto Pedido al archivo especificado. Sería útil agregar un manejo de excepciones más descriptivo en caso de errores al agregar el pedido al archivo.
+	 * @param nombreArchivo
+	 * @param pedido
+	 * @param mainPanel
+	 */
+	public static void agregarPedidoATexto(String nombreArchivo, Pedido pedido, JPanel mainPanel) {
+		try (FileReader fileReader = new FileReader(nombreArchivo);
+			 BufferedReader bufferedReader = new BufferedReader(fileReader)) {
 
-			System.out.println("Pedido agregado al archivo: " + nombreArchivo);
+			String linea;
+			String patenteCamion = pedido.getPatenteCamion();
+			boolean existePatente = false;
+
+			// Verificar si la patente ya existe en el archivo
+			while ((linea = bufferedReader.readLine()) != null) {
+				if (linea.contains("Camion: " + patenteCamion)) {
+					existePatente = true;
+					break;
+				}
+			}
+
+			if (existePatente) {
+				JOptionPane.showMessageDialog(mainPanel, "La patente del camión " + patenteCamion + " ya está registrada en el archivo de pedidos.");
+			} else {
+				try (FileWriter fileWriter = new FileWriter(nombreArchivo, true);
+					 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+					 PrintWriter writer = new PrintWriter(bufferedWriter)) {
+					writer.println("Código pedido: " + pedido.getCodigo() + "; Camion: " + pedido.getPatenteCamion() + "; Fecha inicial: " + pedido.getFechaInicial() + "; Fecha llegada: " + pedido.getFechaFinal() + "; Localidad de donde se envio: " + pedido.getLugarSalida() + "; Destino: " + pedido.getLugarDestino() + "; distancia: " + pedido.getDistancia() + "km" + "; Tiempo Estimado: " + pedido.getTiempo() + " horas aproximadas(se le suma 2 horas al tiempo estimado por problemas de algun taco en el camino u otro inconveniente)");
+
+					JOptionPane.showMessageDialog(mainPanel, "Pedido agregado al archivo: " + nombreArchivo);
+				} catch (IOException e) {
+					JOptionPane.showMessageDialog(mainPanel, "Error al agregar el Pedido al archivo: " + e.getMessage());
+				}
+			}
 		} catch (IOException e) {
-			System.out.println("Error al agregar el Pedido al archivo: " + e.getMessage());
+			JOptionPane.showMessageDialog(mainPanel, "Error al leer el archivo: " + e.getMessage());
 		}
 	}
-	public void eliminarChoferArchivoTxt(String rut, String archivo, JPanel mainPanel) {
+
+	/***
+	 *  Este método elimina un chofer del archivo especificado. Podría beneficiarse de un manejo de excepciones más descriptivo en caso de errores al leer o escribir en el archivo.
+	 * @param rut
+	 * @param archivo
+	 * @param mainPanel
+	 */
+	public static void eliminarChoferArchivoTxt(String rut, String archivo, JPanel mainPanel) {
 		// Leer el contenido del archivo
 		List<String> lineas = new ArrayList<>();
 
@@ -186,7 +273,7 @@ public class Archivador {
 				lineas.add(linea);
 			}
 		} catch (IOException e) {
-			System.out.println("Error al leer el archivo: " + e.getMessage());
+			JOptionPane.showMessageDialog(mainPanel,"Error al leer el archivo: " + e.getMessage());
 			return;
 		}
 
@@ -205,7 +292,7 @@ public class Archivador {
 		}
 
 		if (!choferEncontrado) {
-			JOptionPane.showMessageDialog(mainPanel,"El chofer con RUT " + rut + " no se encuentra en el archivo.");
+			JOptionPane.showMessageDialog(mainPanel, "El chofer con RUT " + rut + " no se encuentra en el archivo.");
 			return;
 		}
 
@@ -219,13 +306,19 @@ public class Archivador {
 			for (String linea : lineas) {
 				writer.println(linea);
 			}
-			JOptionPane.showMessageDialog(mainPanel,"Chofer eliminado del archivo: " + rut);
+			JOptionPane.showMessageDialog(mainPanel, "Chofer eliminado del archivo: " + rut);
 		} catch (FileNotFoundException e) {
-			JOptionPane.showMessageDialog(mainPanel,"Error al guardar los cambios en el archivo: " + e.getMessage());
+			JOptionPane.showMessageDialog(mainPanel, "Error al guardar los cambios en el archivo: " + e.getMessage());
 		}
 	}
 
-	public void eliminarCamionArchivotxt(String patente, String archivo, JPanel mainPanel) {
+	/***
+	 * Este método elimina un camión del archivo especificado. Sería útil agregar un manejo de excepciones más descriptivo en caso de errores al leer o escribir en el archivo.
+	 * @param patente
+	 * @param archivo
+	 * @param mainPanel
+	 */
+	public static void eliminarCamionArchivotxt(String patente, String archivo, JPanel mainPanel) {
 		// Leer el contenido del archivo
 		List<String> lineas = new ArrayList<>();
 
@@ -271,32 +364,126 @@ public class Archivador {
 			JOptionPane.showMessageDialog(mainPanel, "Error al guardar los cambios en el archivo: " + e.getMessage());
 		}
 	}
-	public void agregarChoferaCamion(String archivo, String patente, String rut, JPanel mainPanel) {
+
+	/***
+	 * Este método elimina un camión del archivo especificado. Sería útil agregar un manejo de excepciones más descriptivo en caso de errores al leer o escribir en el archivo.
+	 * @param codigo
+	 * @param archivo
+	 * @param mainPanel
+	 */
+	public static void eliminarPedidoArchivotxt(String codigo, String archivo, JPanel mainPanel) {
+		// Leer el contenido del archivo
+		List<String> lineas = new ArrayList<>();
+
+		try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+			String linea;
+
+			while ((linea = br.readLine()) != null) {
+				lineas.add(linea);
+			}
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(mainPanel, "Error al leer el archivo: " + e.getMessage());
+			return;
+		}
+
+
+		boolean pedidoEncontrado = false;
+		List<Integer> indicesEliminar = new ArrayList<>(); // Índices de las líneas a eliminar
+		for (int i = 0; i < lineas.size(); i++) {
+			String linea = lineas.get(i);
+			if (linea.startsWith("Código pedido: ") && linea.contains(codigo)) {
+				pedidoEncontrado = true;
+				indicesEliminar.add(i); // Almacenar el índice de la línea a eliminar
+			}
+		}
+
+		if (!pedidoEncontrado) {
+			JOptionPane.showMessageDialog(mainPanel, "no existe ese dato");
+			return;
+		}
+
+		// Eliminar las líneas correspondientes al pedido
+		for (int i : indicesEliminar) {
+			lineas.remove(i);
+		}
+
+		// Guardar las líneas actualizadas en el archivo
+		try (PrintWriter writer = new PrintWriter(archivo)) {
+			for (String linea : lineas) {
+				writer.println(linea);
+			}
+			JOptionPane.showMessageDialog(mainPanel, "Ha sido eliminado del archivo: " + codigo);
+		} catch (FileNotFoundException e) {
+			JOptionPane.showMessageDialog(mainPanel, "Error al guardar los cambios en el archivo: " + e.getMessage());
+		}
+	}
+
+	/***
+	 * Este método lee el contenido de un archivo de choferes y lo convierte en una lista de objetos Chofer. Al igual que el método anterior, sería útil agregar un manejo de excepciones más descriptivo en el bloque catch para proporcionar información detallada sobre los errores de lectura del archivo
+	 * @param archivo
+	 * @param patente
+	 * @param rut
+	 * @param mainPanel
+	 *
+	 */
+	public static void agregarChoferaCamion(String archivo, String patente, String rut, JPanel mainPanel) {
 		try (FileWriter fileWriter = new FileWriter(archivo, true);
 			 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 			 PrintWriter writer = new PrintWriter(bufferedWriter)) {
 
 			writer.println("Camión: " + patente + "; Chofer: " + rut);
 
-			System.out.println("Chofer y camión agregados al archivo: " + archivo);
+			JOptionPane.showMessageDialog(mainPanel,"Chofer y camión agregados al archivo: " + archivo);
 		} catch (IOException e) {
-			System.out.println("Error al agregar el chofer y el camión al archivo: " + e.getMessage());
+			JOptionPane.showMessageDialog(mainPanel,"Error al agregar el chofer y el camión al archivo: " + e.getMessage());
 		}
 	}
-	public List<Camion> getListaCamiones() {
+
+	/***
+	 *  Este método devuelve la lista de camiones actualmente cargada en el objeto Archivador. Parece estar implementado correctamente.
+	 * @return listaCamiones
+	 */
+	public static List<Camion> getListaCamiones() {
 		return listaCamiones;
 	}
 
-	public List<Camion> cargarCamionesDesdeArchivo(String archivo) {
+	/***
+	 *Este método carga la lista de camiones desde un archivo especificado y la asigna a la variable listaCamiones. Sería útil agregar manejo de excepciones más descriptivo en caso de errores al leer el archivo
+	 * @param archivo
+	 * @return listaCamiones
+	 */
+	public static List<Camion> cargarCamionesDesdeArchivo(String archivo) {
 		listaCamiones = convertirArchivoCamiones(archivo);
 		return listaCamiones;
 	}
-	public List<Chofer> cargarChoferesDesdeArchivo(String archivo) {
+
+	/***
+	 *  Este método carga la lista de camiones desde un archivo especificado y la asigna a la variable listaCamiones. Sería útil agregar manejo de excepciones más descriptivo en caso de errores al leer el archivo.
+	 * @param archivo
+	 * @return listaChoferes
+	 */
+	public static List<Chofer> cargarChoferesDesdeArchivo(String archivo) {
 		listaChoferes = convertirArchivoChoferes(archivo);
 		return listaChoferes;
 	}
+
+	/***
+	 *  Este método carga la lista de pedidos desde un archivo especificado y la asigna a la variable listaPedidos. Sería útil agregar manejo de excepciones más descriptivo en caso de errores al leer el archivo.
+	 * @param archivo
+	 * @return listaPedidos
+	 */
 	public List<Pedido> cargarPedidoDesdeArchivo(String archivo) {
 		listaPedidos = convertirArchivoPedidos(archivo);
 		return listaPedidos;
+	}
+
+	/***
+	 * Este método carga la lista de distancias desde un archivo especificado y la asigna a la variable listaDistancias. Sería útil agregar manejo de excepciones más descriptivo en caso de errores al leer el archivo.
+	 * @param archivo
+	 * @return listaDistancias
+	 */
+	public List<Distancia> cargarDistanciaDesdeArchivo(String archivo) {
+		listaDistancias = convertirArchivoDistancias(archivo);
+		return listaDistancias;
 	}
 }

@@ -59,7 +59,6 @@ public class VentanaOpcionesCamiones extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Admin.mostrarCamiones(mainPanel);
-
                 } catch (Exception E) {
                     JOptionPane.showMessageDialog(mainPanel, "El archivo no existe");
                 }
@@ -69,9 +68,9 @@ public class VentanaOpcionesCamiones extends JFrame {
         agregarChoferAAlgunButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String patente = "KAKEKI";
-                String rut = "184564575";
-                Admin.agregarChoferaCamionAD(patente, rut,mainPanel);
+                VentanaAgregarChoferaCamion v = new VentanaAgregarChoferaCamion();
+                v.setVisible(true);
+                setVisible(false);
             }
         });
 

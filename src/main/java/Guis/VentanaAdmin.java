@@ -1,8 +1,5 @@
 package Guis;
 
-import Archivador.Archivador;
-import ContextoProblema.Admin;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,11 +9,8 @@ public class VentanaAdmin extends JFrame{
     private JButton opcionesCamionesButton;
     private JButton opcionesChoferesButton;
     private JPanel mainPanel;
-    private JButton botonDePruebasButton;
 
     public VentanaAdmin() {
-        Archivador.convertirArchivoChoferes("listaChoferes.txt");
-        Archivador.convertirArchivoCamiones("listaCamiones.txt");
         setContentPane(mainPanel);
         setTitle("Admin");
         setSize(900, 600);

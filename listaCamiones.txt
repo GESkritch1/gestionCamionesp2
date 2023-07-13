@@ -4,3 +4,4 @@ Patente: EDAEDA; Permiso de Circulación al día: false; Revisión técnica al d
 Patente: KAKEKI; Permiso de Circulación al día: true; Revisión técnica al día: true; Estado actual del camión (true=funcionando, false=no funcionando): true; Carga máxima del camión: 14
 Patente: RIEUJT; Permiso de Circulación al día: false; Revisión técnica al día: true; Estado actual del camión (true=funcionando, false=no funcionando): false; Carga máxima del camión: 20
 Patente: JKDHSG; Permiso de Circulación al día: true; Revisión técnica al día: true; Estado actual del camión (true=funcionando, false=no funcionando): true; Carga máxima del camión: 25
+Patente: KVLSJF; Permiso de Circulación al día: true; Revisión técnica al día: true; Estado actual del camión (true=funcionando, false=no funcionando): false; Carga máxima del camión: 52

@@ -7,7 +7,6 @@ import java.util.List;
 public class Chofer implements Serializable {
 	public static List<Chofer> listaChoferes = new ArrayList<>();
 
-	Camion transporte;
 	private String nombre;
 	private String rut;
 	private int edad;
@@ -71,7 +70,6 @@ public class Chofer implements Serializable {
 	public static void leerListaChoferes(){
 
 	}
-
 
 
 }
