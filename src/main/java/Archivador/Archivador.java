@@ -19,10 +19,11 @@ public class Archivador {
 	List<Pedido> listaPedidos = convertirArchivoPedidos("listaPedidos.txt");
 	List<Distancia> listaDistancias = convertirArchivoDistancias("listaDistancias.txt");
 
-
-	public Archivador() {
-	}
-
+	/***
+	 *Este método lee el contenido de un archivo de pedidos y lo convierte en una lista de objetos Pedido. Sería útil agregar manejo de excepciones más descriptivo en el bloque catch para proporcionar información detallada sobre los errores de lectura del archivo.
+	 * @param archivo
+	 * @return listaPedidos
+	 */
 	public static List<Pedido> convertirArchivoPedidos(String archivo) {
 		List<Pedido> listaPedidos = new ArrayList<>();
 		try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
@@ -35,17 +36,16 @@ public class Archivador {
 				listaPedidos.add(pedido);
 			}
 		} catch (IOException e) {
-
-			//
-			//
-			//
-			//
-			//
 		}
 
 		return listaPedidos;
 	}
 
+	/***
+	 * Este método lee el contenido de un archivo de choferes y lo convierte en una lista de objetos Chofer. Al igual que el método anterior, sería útil agregar un manejo de excepciones más descriptivo en el bloque catch para proporcionar información detallada sobre los errores de lectura del archivo
+	 * @param archivo
+	 * @return listaChoferes
+	 */
 	public static List<Chofer> convertirArchivoChoferes(String archivo) {
 		List<Chofer> listaChoferes = new ArrayList<>();
 
@@ -64,15 +64,16 @@ public class Archivador {
 				listaChoferes.add(chofer);
 			}
 		} catch (IOException e) {
-			//
-			//
-			//
-			//
 		}
 
 		return listaChoferes;
 	}
 
+	/***
+	 * Este método lee el contenido de un archivo de camiones y lo convierte en una lista de objetos Camion. Sería útil agregar manejo de excepciones más descriptivo en el bloque catch para proporcionar información detallada sobre los errores de lectura del archivo.
+	 * @param archivo
+	 * @return listaCamiones
+	 */
 	public static List<Camion> convertirArchivoCamiones(String archivo) {
 		List<Camion> listaCamiones = new ArrayList<>();
 
@@ -94,15 +95,16 @@ public class Archivador {
 				listaCamiones.add(camion);
 			}
 		} catch (IOException e) {
-			//
-			//
-			//
-			//
 		}
 
 		return listaCamiones;
 	}
 
+	/***
+	 *Este método lee el contenido de un archivo de distancias y lo convierte en una lista de objetos Distancia. Sería útil agregar manejo de excepciones más descriptivo en el bloque catch para proporcionar información detallada sobre los errores de lectura del archivo
+	 * @param archivo
+	 * @return  listaDistancias
+	 */
 	public static List<Distancia> convertirArchivoDistancias(String archivo) {
 		List<Distancia> listaDistancias = new ArrayList<>();
 
@@ -119,15 +121,16 @@ public class Archivador {
 				listaDistancias.add(distanciasDesdeTemuco);
 			}
 		} catch (IOException e) {
-			//
-			//
-			//
-			//
-		}
+				}
 
 		return listaDistancias;
 	}
 
+	/***
+	 * Este método muestra el contenido de un archivo en una ventana emergente. Parece estar implementado correctamente.
+	 * @param rutaArchivo
+	 * @param mainPanel
+	 */
 	public static void mostrarArchivo(String rutaArchivo, JPanel mainPanel) {
 		try {
 			// Crea un objeto File con la ruta del archivo
@@ -153,6 +156,12 @@ public class Archivador {
 		}
 	}
 
+	/***
+	 * Este método agrega un objeto Chofer al archivo especificado. Sería útil agregar un manejo de excepciones más descriptivo en caso de errores al agregar el chofer al archivo.
+	 * @param nombreArchivo
+	 * @param chofer
+	 * @param mainPanel
+	 */
 	public static void agregarChoferATexto(String nombreArchivo, Chofer chofer,JPanel mainPanel) {
 		try (FileWriter fileWriter = new FileWriter(nombreArchivo, true);
 			 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -166,6 +175,12 @@ public class Archivador {
 		}
 	}
 
+	/***
+	 * Este método agrega un objeto Camion al archivo especificado. Sería útil agregar un manejo de excepciones más descriptivo en caso de errores al agregar el camión al archivo.
+	 * @param nombreArchivo
+	 * @param camion
+	 * @param mainPanel
+	 */
 	public static void agregarCamionATexto(String nombreArchivo, Camion camion, JPanel mainPanel) {
 		try (FileReader fileReader = new FileReader(nombreArchivo);
 			 BufferedReader bufferedReader = new BufferedReader(fileReader)) {
@@ -201,6 +216,12 @@ public class Archivador {
 		}
 	}
 
+	/***
+	 * Este método agrega un objeto Pedido al archivo especificado. Sería útil agregar un manejo de excepciones más descriptivo en caso de errores al agregar el pedido al archivo.
+	 * @param nombreArchivo
+	 * @param pedido
+	 * @param mainPanel
+	 */
 	public static void agregarPedidoATexto(String nombreArchivo, Pedido pedido, JPanel mainPanel) {
 		try (FileReader fileReader = new FileReader(nombreArchivo);
 			 BufferedReader bufferedReader = new BufferedReader(fileReader)) {
@@ -235,6 +256,12 @@ public class Archivador {
 		}
 	}
 
+	/***
+	 *  Este método elimina un chofer del archivo especificado. Podría beneficiarse de un manejo de excepciones más descriptivo en caso de errores al leer o escribir en el archivo.
+	 * @param rut
+	 * @param archivo
+	 * @param mainPanel
+	 */
 	public static void eliminarChoferArchivoTxt(String rut, String archivo, JPanel mainPanel) {
 		// Leer el contenido del archivo
 		List<String> lineas = new ArrayList<>();
@@ -285,6 +312,12 @@ public class Archivador {
 		}
 	}
 
+	/***
+	 * Este método elimina un camión del archivo especificado. Sería útil agregar un manejo de excepciones más descriptivo en caso de errores al leer o escribir en el archivo.
+	 * @param patente
+	 * @param archivo
+	 * @param mainPanel
+	 */
 	public static void eliminarCamionArchivotxt(String patente, String archivo, JPanel mainPanel) {
 		// Leer el contenido del archivo
 		List<String> lineas = new ArrayList<>();
@@ -332,6 +365,12 @@ public class Archivador {
 		}
 	}
 
+	/***
+	 * Este método elimina un camión del archivo especificado. Sería útil agregar un manejo de excepciones más descriptivo en caso de errores al leer o escribir en el archivo.
+	 * @param codigo
+	 * @param archivo
+	 * @param mainPanel
+	 */
 	public static void eliminarPedidoArchivotxt(String codigo, String archivo, JPanel mainPanel) {
 		// Leer el contenido del archivo
 		List<String> lineas = new ArrayList<>();
@@ -379,6 +418,14 @@ public class Archivador {
 		}
 	}
 
+	/***
+	 * Este método lee el contenido de un archivo de choferes y lo convierte en una lista de objetos Chofer. Al igual que el método anterior, sería útil agregar un manejo de excepciones más descriptivo en el bloque catch para proporcionar información detallada sobre los errores de lectura del archivo
+	 * @param archivo
+	 * @param patente
+	 * @param rut
+	 * @param mainPanel
+	 *
+	 */
 	public static void agregarChoferaCamion(String archivo, String patente, String rut, JPanel mainPanel) {
 		try (FileWriter fileWriter = new FileWriter(archivo, true);
 			 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -392,25 +439,49 @@ public class Archivador {
 		}
 	}
 
+	/***
+	 *  Este método devuelve la lista de camiones actualmente cargada en el objeto Archivador. Parece estar implementado correctamente.
+	 * @return listaCamiones
+	 */
 	public static List<Camion> getListaCamiones() {
 		return listaCamiones;
 	}
 
+	/***
+	 *Este método carga la lista de camiones desde un archivo especificado y la asigna a la variable listaCamiones. Sería útil agregar manejo de excepciones más descriptivo en caso de errores al leer el archivo
+	 * @param archivo
+	 * @return listaCamiones
+	 */
 	public static List<Camion> cargarCamionesDesdeArchivo(String archivo) {
 		listaCamiones = convertirArchivoCamiones(archivo);
 		return listaCamiones;
 	}
 
+	/***
+	 *  Este método carga la lista de camiones desde un archivo especificado y la asigna a la variable listaCamiones. Sería útil agregar manejo de excepciones más descriptivo en caso de errores al leer el archivo.
+	 * @param archivo
+	 * @return listaChoferes
+	 */
 	public static List<Chofer> cargarChoferesDesdeArchivo(String archivo) {
 		listaChoferes = convertirArchivoChoferes(archivo);
 		return listaChoferes;
 	}
 
+	/***
+	 *  Este método carga la lista de pedidos desde un archivo especificado y la asigna a la variable listaPedidos. Sería útil agregar manejo de excepciones más descriptivo en caso de errores al leer el archivo.
+	 * @param archivo
+	 * @return listaPedidos
+	 */
 	public List<Pedido> cargarPedidoDesdeArchivo(String archivo) {
 		listaPedidos = convertirArchivoPedidos(archivo);
 		return listaPedidos;
 	}
 
+	/***
+	 * Este método carga la lista de distancias desde un archivo especificado y la asigna a la variable listaDistancias. Sería útil agregar manejo de excepciones más descriptivo en caso de errores al leer el archivo.
+	 * @param archivo
+	 * @return listaDistancias
+	 */
 	public List<Distancia> cargarDistanciaDesdeArchivo(String archivo) {
 		listaDistancias = convertirArchivoDistancias(archivo);
 		return listaDistancias;
