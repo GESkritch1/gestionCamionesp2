@@ -1,0 +1,7 @@
+Patente: DADADA; Permiso de Circulación al día: false; Revisión técnica al día: false; Estado actual del camión (true=funcionando, false=no funcionando): true; Carga máxima del camión: 15
+Patente: SILVAA; Permiso de Circulación al día: true; Revisión técnica al día: true; Estado actual del camión (true=funcionando, false=no funcionando): true; Carga máxima del camión: 12
+Patente: EDAEDA; Permiso de Circulación al día: false; Revisión técnica al día: false; Estado actual del camión (true=funcionando, false=no funcionando): true; Carga máxima del camión: 21
+Patente: KAKEKI; Permiso de Circulación al día: true; Revisión técnica al día: true; Estado actual del camión (true=funcionando, false=no funcionando): true; Carga máxima del camión: 14
+Patente: RIEUJT; Permiso de Circulación al día: false; Revisión técnica al día: true; Estado actual del camión (true=funcionando, false=no funcionando): false; Carga máxima del camión: 20
+Patente: JKDHSG; Permiso de Circulación al día: true; Revisión técnica al día: true; Estado actual del camión (true=funcionando, false=no funcionando): true; Carga máxima del camión: 25
+Patente: KVLSJF; Permiso de Circulación al día: true; Revisión técnica al día: true; Estado actual del camión (true=funcionando, false=no funcionando): false; Carga máxima del camión: 52
