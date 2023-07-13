@@ -19,10 +19,19 @@ public class Admin {
 		Archivador.mostrarArchivo("listaCamiones.txt", mainPanel);
 	}
 
+	/***
+	 * Utiliza la clase "Archivador" para eliminar un chofer del archivo de texto "listaChoferes.txt
+	 * @param choferaEliminar
+	 * @param mainPanel
+	 */
 	public static void eliminarChofer(String choferaEliminar, JPanel mainPanel) {
 		Archivador.eliminarChoferArchivoTxt(choferaEliminar, "listaChoferes.txt", mainPanel);
 	}
 
+	/***
+	 * Utiliza la clase "Archivador" para mostrar los choferes almacenados en un archivo de texto
+	 * @param mainPanel
+	 */
 	public static void mostrarChoferes(JPanel mainPanel) {
 		Archivador.mostrarArchivo("listaChoferes.txt", mainPanel);
 	}
@@ -48,10 +57,24 @@ public class Admin {
 		System.out.println("Chofer agregado exitosamente.");
 	}
 
+	/***
+	 * Utiliza la clase "Archivador" para eliminar un camión del archivo de texto "listaCamiones.txt"
+	 * @param camionaEliminar
+	 * @param mainPanel
+	 */
 	public static void eliminarCamion(String camionaEliminar, JPanel mainPanel) {
 		Archivador.eliminarCamionArchivotxt(camionaEliminar, "listaCamiones.txt", mainPanel);
 	}
 
+	/***
+	 *  Crea un nuevo objeto de la clase "Camion" con los datos proporcionados y lo agrega a una lista de camiones. Luego, utiliza la clase "Archivador" para guardar el nuevo camión en el archivo de texto "listaCamiones.txt"
+	 * @param patente
+	 * @param permisoCirculacion
+	 * @param revisionTecnica
+	 * @param estadoActual
+	 * @param cargaMax
+	 * @param mainPanel
+	 */
 	public static void agregarCamion(String patente, boolean permisoCirculacion, boolean revisionTecnica, boolean estadoActual, int cargaMax, JPanel mainPanel) {
 		Camion nuevoCamion = new Camion(patente, permisoCirculacion, revisionTecnica, estadoActual, cargaMax);
 
@@ -62,6 +85,12 @@ public class Admin {
 		Archivador.agregarCamionATexto("listaCamiones.txt", nuevoCamion, mainPanel);
 	}
 
+	/***
+	 * Busca un chofer en la lista de choferes y un camión en la lista de camiones utilizando la clase "Archivador". Si ambos objetos son encontrados, agrega la relación entre el chofer y el camión en un archivo de texto llamado "listaCamionConChofer.txt"
+	 * @param patente
+	 * @param rut
+	 * @param mainPanel
+	 */
 	public static void agregarChoferaCamionAD(String patente, String rut, JPanel mainPanel) {
 		// Buscar el chofer en la lista de choferes
 		try {
@@ -119,7 +148,11 @@ public class Admin {
 		}
 	}
 
-	// Método para buscar un camión por su patente
+	/***
+	 * Busca un camión en la lista de camiones utilizando la clase "Archivador" y devuelve el camión correspondiente a la patente especificada. Si no se encuentra ningún camión con esa patente, devuelve null
+	 * @param patente
+	 * @return
+	 */
 	private Camion buscarCamionPorPatente(String patente) {
 		listaCamiones=Archivador.getListaCamiones();
 		for (Camion camion : listaCamiones) {

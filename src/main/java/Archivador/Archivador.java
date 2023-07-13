@@ -152,7 +152,7 @@ public class Archivador {
 			JOptionPane.showMessageDialog(mainPanel, contenidoArchivo.toString());
 
 		} catch (FileNotFoundException e) {
-			System.out.println("El archivo no pudo ser encontrado: " + e.getMessage());
+			JOptionPane.showMessageDialog(mainPanel,"El archivo no pudo ser encontrado: " + e.getMessage());
 		}
 	}
 
@@ -169,9 +169,9 @@ public class Archivador {
 
 			writer.println("Rut: " + chofer.getRut() + "; Nombre: " + chofer.getNombre() + "; Licencia al día: " + chofer.getLicencia() + "; Estado conductor (true=trabajando, false=no trabajando): " + chofer.getEstadoChofer());
 
-			System.out.println("Chofer agregado al archivo: " + nombreArchivo);
+			JOptionPane.showMessageDialog(mainPanel,"Chofer agregado al archivo: " + nombreArchivo);
 		} catch (IOException e) {
-			System.out.println("Error al agregar el chofer al archivo: " + e.getMessage());
+			JOptionPane.showMessageDialog(mainPanel,"Error al agregar el chofer al archivo: " + e.getMessage());
 		}
 	}
 
