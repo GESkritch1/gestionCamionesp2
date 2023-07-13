@@ -1,5 +1,6 @@
 package Guis;
 
+import Archivador.Archivador;
 import ContextoProblema.Admin;
 
 import javax.swing.*;
@@ -14,6 +15,8 @@ public class VentanaAdmin extends JFrame{
     private JButton botonDePruebasButton;
 
     public VentanaAdmin() {
+        Archivador.convertirArchivoChoferes("listaChoferes.txt");
+        Archivador.convertirArchivoCamiones("listaCamiones.txt");
         setContentPane(mainPanel);
         setTitle("Admin");
         setSize(900, 600);
@@ -36,10 +39,12 @@ public class VentanaAdmin extends JFrame{
                 setVisible(false);
             }
         });
-        botonDePruebasButton.addActionListener(new ActionListener() {
+        opcionesPedidoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Admin.pruebas();
+                VentanaOpcionesPedidos v = new VentanaOpcionesPedidos();
+                v.setVisible(true);
+                setVisible(false);
             }
         });
     }

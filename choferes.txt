@@ -1,3 +1,0 @@
-Rut: 12345678-9; Nombre: Juan Perez; Licencia al día: Licencia123; Estado conductor (true=trabajando, false=no trabajando): true
-Rut: 12345678-9; Nombre: Juan Perez; Licencia al día: Licencia123; Estado conductor (true=trabajando, false=no trabajando): true
-Rut: 12345678-9; Nombre: Juan Perez; Licencia al día: Licencia123; Estado conductor (true=trabajando, false=no trabajando): true

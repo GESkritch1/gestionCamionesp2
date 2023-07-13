@@ -41,6 +41,7 @@ public class VentanaAgregarChofer extends JFrame {
 
                     String estadoChoferTemp2=estadoChoferTemp.getText();
                     boolean estadoChofer;
+
                     if (estadoChoferTemp2.equals("si")){
                         estadoChofer = true;
                     }else if (estadoChoferTemp2.equals("no")){
@@ -53,9 +54,8 @@ public class VentanaAgregarChofer extends JFrame {
                     if (licenciaTemp2.equals("A4")||licenciaTemp2.equals("A5")){
                          licencia = licenciaTemp2;
                     }else {
-                        throw new IllegalStateException("Esa opcion no existe en el estado de Chofer");
+                        throw new IllegalStateException("Esa opcion no existe en el tipo de licencia");
                     }
-
 
                     Admin.agregarChofer(nombre, rut,edad,licencia,estadoChofer);
                     JOptionPane.showMessageDialog(mainPanel, "se guardo correctamente");

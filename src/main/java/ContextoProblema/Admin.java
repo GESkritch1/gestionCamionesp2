@@ -10,9 +10,9 @@ import static ContextoProblema.Camion.listaCamiones;
 import static ContextoProblema.Chofer.listaChoferes;
 
 public class Admin {
+
 	static Archivador archivador = new Archivador();
 	static Scanner sc = new Scanner(System.in);
-
 	public static void mostrarCamiones(JPanel mainPanel) {
 		archivador.mostrarArchivo("listaCamiones.txt", mainPanel);
 	}
@@ -53,7 +53,8 @@ public class Admin {
 
 	public static void agregarChoferaCamionAD(String patente, String rut, JPanel mainPanel) {
 		// Buscar el chofer en la lista de choferes
-
+		listaCamiones=archivador.cargarCamionesDesdeArchivo("listaCamiones.txt");
+		listaChoferes=archivador.cargarChoferesDesdeArchivo("listaChoferes.txt");
 		Chofer chofer = null;
 		for (Chofer c : listaChoferes) {
 			if (c.getRut().equals(rut)) {
@@ -73,20 +74,50 @@ public class Admin {
 
 		if (chofer != null && camion != null) {
 			archivador.agregarChoferaCamion("listaCamionConChofer.txt", patente, rut, mainPanel);
-			System.out.println("Chofer y camión agregados al archivo listaCamionConChofer.txt");
+			JOptionPane.showMessageDialog(mainPanel,"Chofer y camión agregados al archivo listaCamionConChofer.txt");
 		} else {
-			System.out.println("No se pudo encontrar el chofer o el camión.");
+			JOptionPane.showMessageDialog(mainPanel,"No se pudo encontrar el chofer o el camión.");
 		}
 	}
 
-	public static void pruebas() {
+	public void agregarPedido(String codigo, String patenteCamion, int fechaInicial, int fechaFinal, int distancia, String lugarDestino, int tiempo, JPanel mainPanel) {
+		// Cargar los camiones desde el archivo
+
+		// Buscar el camión por su patente
+		Camion camion = buscarCamionPorPatente(patenteCamion);
+		if (camion != null) {
+			Pedido pedido = new Pedido(codigo, patenteCamion, fechaInicial, fechaFinal, lugarDestino, distancia, tiempo);
+			archivador.agregarPedidoATexto("listaPedidos.txt", pedido);
+		} else {
+			System.out.println("El camión con patente " + patenteCamion + " no existe.");
+		}
 	}
 
-	public List<Chofer> getListaChoferes() {
-		return listaChoferes;
+	// Método para buscar un camión por su patente
+	private Camion buscarCamionPorPatente(String patente) {
+		listaCamiones=archivador.getListaCamiones();
+		for (Camion camion : listaCamiones) {
+			if (camion.getPatente().equals(patente)) {
+				return camion;
+			}
+		}
+		return null;
 	}
 
-	public List<Camion> getListaCamiones() {
-		return listaCamiones;
+	public String validadorDeCodigoPedido() {
+		List<Pedido> codigos = archivador.cargarPedidoDesdeArchivo("listaPedido.txt");
+			String numero = String.valueOf((int) (Math.random()*1000000+100));
+			boolean valid = false;
+			do {
+				for (int i = 0; i < codigos.size(); i++) {
+					if (codigos.get(i).equals(numero) ) {
+						numero = String.valueOf((int) (Math.random() * 1000000 + 100));
+					}
+					if (!codigos.get(i).equals(numero) ) {
+						valid = true;
+					}
+				}
+			}while (valid=false);
+			return numero;
 	}
 }

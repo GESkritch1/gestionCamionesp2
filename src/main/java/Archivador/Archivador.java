@@ -14,12 +14,30 @@ import java.io.FileNotFoundException;
 public class Archivador {
 	List<Chofer> listaChoferes = convertirArchivoChoferes("listaChoferes.txt");
 	List<Camion> listaCamiones = convertirArchivoCamiones("listaCamiones.txt");
+
+	List<Pedido> listaPedidos = convertirArchivoPedidos("listaPedidos.txt");
 	public Archivador() {
 
 		// Ahora puedes utilizar las listas de choferes y camiones en tu programa
 		// Realiza las operaciones que necesites con los datos convertidos
 	}
+	public static List<Pedido> convertirArchivoPedidos(String archivo) {
+		List<Pedido> listaPedidos = new ArrayList<>();
+		try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+			String linea;
+			while ((linea = br.readLine()) != null) {
+				String[] partes = linea.split("; ");
 
+				String codigo = partes[0].substring(14);
+				Pedido pedido = new Pedido(codigo);
+				listaPedidos.add(pedido);
+			}
+		} catch (IOException e) {
+			System.out.println("Error al leer el archivo: " + e.getMessage());
+		}
+
+		return listaPedidos;
+	}
 	public static List<Chofer> convertirArchivoChoferes(String archivo) {
 		List<Chofer> listaChoferes = new ArrayList<>();
 
@@ -43,7 +61,6 @@ public class Archivador {
 
 		return listaChoferes;
 	}
-
 	public static List<Camion> convertirArchivoCamiones(String archivo) {
 		List<Camion> listaCamiones = new ArrayList<>();
 
@@ -111,8 +128,6 @@ public class Archivador {
 			System.out.println("Error al agregar el chofer al archivo: " + e.getMessage());
 		}
 	}
-
-
 	public void agregarCamionATexto(String nombreArchivo, Camion camion, JPanel mainPanel) {
 		try (FileReader fileReader = new FileReader(nombreArchivo);
 			 BufferedReader bufferedReader = new BufferedReader(fileReader)) {
@@ -148,14 +163,14 @@ public class Archivador {
 		}
 	}
 
-	public void agregarPedidoATexto(String nombreArchivo, Pedido pedido, JPanel mainPanel) {
+	public void agregarPedidoATexto(String nombreArchivo, Pedido pedido) {
 		try (FileWriter fileWriter = new FileWriter(nombreArchivo, true);
 			 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 			 PrintWriter writer = new PrintWriter(bufferedWriter)) {
+			int tiempodeEntregaAprox = pedido.getTiempo() +2;
+			writer.println("Código pedido: "+ pedido.getCodigo()+"; Camion: "+ pedido.getPatenteCamion()+"; Fecha inicial: "+pedido.getFechaInicial() +"; Fecha llegada: "+ pedido.getFechaFinal()+"; Localidad de donde se envio: "+pedido.getLugarSalida()+"; Destino: "+pedido.getLugarDestino()+"; distancia: "+pedido.getDistancia() +"km"+"; Tiempo Estimado: "+tiempodeEntregaAprox+ " horas aproximadas(se le suma 2 horas al tiempo estimado por problemas de algun taco en el camino u otro inconveniente)");
 
-			writer.println("Código pedido:"+ pedido.getCodigo()+";Camion:"+";Fecha inicial:"+pedido.getFechaInicial() +";Fecha llegada:"+ pedido.getFechaFinal()+";Localidad de donde se envio:"+pedido.getLugarSalida()+";Destino:"+pedido.getLugarDestino()+";Tiempo Extimado:"+pedido.getTiempo());
-
-			JOptionPane.showMessageDialog(mainPanel,"Pedido agregado al archivo: " + nombreArchivo);
+			System.out.println("Pedido agregado al archivo: " + nombreArchivo);
 		} catch (IOException e) {
 			System.out.println("Error al agregar el Pedido al archivo: " + e.getMessage());
 		}
@@ -267,5 +282,21 @@ public class Archivador {
 		} catch (IOException e) {
 			System.out.println("Error al agregar el chofer y el camión al archivo: " + e.getMessage());
 		}
+	}
+	public List<Camion> getListaCamiones() {
+		return listaCamiones;
+	}
+
+	public List<Camion> cargarCamionesDesdeArchivo(String archivo) {
+		listaCamiones = convertirArchivoCamiones(archivo);
+		return listaCamiones;
+	}
+	public List<Chofer> cargarChoferesDesdeArchivo(String archivo) {
+		listaChoferes = convertirArchivoChoferes(archivo);
+		return listaChoferes;
+	}
+	public List<Pedido> cargarPedidoDesdeArchivo(String archivo) {
+		listaPedidos = convertirArchivoPedidos(archivo);
+		return listaPedidos;
 	}
 }
