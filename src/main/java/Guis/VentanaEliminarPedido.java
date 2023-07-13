@@ -29,5 +29,13 @@ public class VentanaEliminarPedido extends JFrame{
                 setVisible(false);
             }
         });
+        volverALaVentanaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaOpcionesPedidos v = new VentanaOpcionesPedidos();
+                v.setVisible(true);
+                setVisible(false);
+            }
+        });
     }
 }
